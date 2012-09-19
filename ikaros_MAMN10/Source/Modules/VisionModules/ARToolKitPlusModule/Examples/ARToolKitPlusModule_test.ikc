@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+
+<group title="MarkerTracker Example">
+	
+		<module
+			class   = "InputVideoQT"
+			name	= "CAMERA"			
+            size_x  = "640"
+            size_y  =  "480"
+            list_devices = "no"
+		/>
+
+		<module
+			class   = "ARToolKitPlusModule"
+			name	= "MarkerTracker"			
+		/>
+
+		<connection sourcemodule = "CAMERA" source = "INTENSITY" targetmodule = "MarkerTracker" target = "INPUT" delay="0" />
+
+		<connection sourcemodule = "CAMERA" source = "RED" targetmodule = "MarkerTracker" target = "RED" delay="0" />
+		<connection sourcemodule = "CAMERA" source = "GREEN" targetmodule = "MarkerTracker" target = "GREEN" delay="0" />
+		<connection sourcemodule = "CAMERA" source = "BLUE" targetmodule = "MarkerTracker" target = "BLUE" delay="0" />
+
+		<view name="Inputs">
+			<object
+				class   ="Image"
+                title   = "Markers"
+				type	= "rgb"
+				module  = "MarkerTracker"
+				source  = "OUTPUT_RED+OUTPUT_GREEN+OUTPUT_BLUE"
+				x="0" y="0"
+				w="4" h="4"
+				min = "0"
+				max = "1"
+			/>
+
+			<object
+				class   = "Lines"
+				module  = "MarkerTracker"
+				source  = "EDGES"
+				x="0" y="0"
+				w="4" h="4"
+				min = "0"
+				max = "1"
+                color="red"
+                stroke_width="1"
+			/>
+
+			<object
+				class   = "Cross"
+				module  = "MarkerTracker"
+				source  = "MARKERS"
+                size = "0.03"
+                stroke_width="1"
+				x="0" y="0"
+				w="4" h="4"
+				min = "0"
+				max = "1"
+			/>
+
+        
+            <object
+                class   = "Label"
+                type    = "value"
+                select  = "2"
+                decimals = "0"
+                offset_x = "0.05"
+                offset_y = "0.05"
+                module  = "MarkerTracker"
+                source  = "MARKERS"
+                x="0" y="0"
+                w="4" h="4"
+ 			/>
+        </view>
+
+</group>
+

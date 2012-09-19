@@ -1,0 +1,160 @@
+To install Ikaros for use with the robot arm and Kinect
+========================================================
+
+Short instructions:
+
+Install the compilers and IDEs as suggested on the Ikaros homepage
+http://www.ikaros-project.org/downloads/
+
+1. Download http://www.ikaros-project.org/downloads/ikaros_MAMN10.zip
+2. Install the JPEG Libraries
+3. Install the PNG Libraries
+4. Install the ArtoolKit Libraries (launchpad.net/artoolkitplus) 
+5. Install the Kinnect Libraries (OpenKinect)
+6. Install FTDI drivers (www.ftdichip.com)
+
+Compile ikaros. Check the homepage (http://www.ikaros-project.org/downloads/) for specific instructions for different platforms.
+
+Run ikaros with the configuration file that is located in {ikaros}/MAMN10/Arm.ikc
+
+Good luck!
+
+
+
+Detailed instructions:
+
+OSX
+===
+
+1. Intall latest Xcode from the App Store
+
+2. Start Xcode and install the Command line tools in the Xcode->Preferences->Downloads
+
+Installing the required libraries requires the use of the Terminal application. Open it and type the commands below.
+You can copy and past most of the commands from these instructions. The libraries will be installed in /usr/local.
+
+3. Install brew
+
+ruby <(curl -fsSkL raw.github.com/mxcl/homebrew/go)
+
+Brew is subsequently used to install some of the libraries below.
+
+4. Install freenect (http://openkinect.org/wiki/Getting_Started#Homebrew)
+
+cd /usr/local/Library/Formula
+curl --insecure -O "https://raw.github.com/OpenKinect/libfreenect/master/platform/osx/homebrew/libfreenect.rb"
+curl --insecure -O "https://raw.github.com/OpenKinect/libfreenect/master/platform/osx/homebrew/libusb-freenect.rb"
+brew install libfreenect
+brew install libjpeg
+brew install libpng
+
+On versions of OS X before mountain lion you might need to create symbolic links to the library:
+
+ln -s /usr/local/opt/libpng/include/pngconf.h /usr/local/include/
+ln -s /usr/local/opt/libpng/include/png.h  /usr/local/include/
+ln -s /usr/local/opt/libpng/include/pnglibconf.h  /usr/local/include/
+ln -s /usr/local/opt/libpng/lib/libpng.dylib /usr/local/lib/
+
+
+5. Get and extract ARToolKitPlus (https://launchpad.net/artoolkitplus) 
+
+curl -L https://launchpad.net/artoolkitplus/trunk/2.2.2/+download/ARToolKitPlus-2.2.2.tar.bz2 > ARToolKitPlus-2.2.2.tar.bz2
+tar xfv ARToolKitPlus-2.2.2.tar.bz2 
+
+6. Compile ARToolKitPlus:
+cd {ARToolKitPlus}
+cmake .
+make
+
+cp lib/LibARToolKitPlus.dylib /usr/local/lib/
+cp -r include/ARToolKitPlus/ /usr/local/include/ARToolKitPlus
+
+7. Install FTDI drivers (VCP drivers) available at the FTDI web page
+
+www.ftdichip.com/Drivers/VCP.htm
+
+8. Download the ikaros source for MAMN10
+
+curl -OL http://www.ikaros-project.org/downloads/ikaros_MAMN10.zip
+unzip ikaros_MAMN10.zip
+
+9. Open the Xcode project file in {ikaros}/OS_X/IKAROS.xcodeproj
+
+10. Build project
+
+11. Edit the simulation configuration file {ikaros}/MAMN10/Arm.ikc with a text editor
+
+Change the device in the first Dynamixel module to fit the serial port on your computer.
+You can check the port then we USB2Dynamixel is connected to the USB port by typing:
+
+ls /dev/cu.usbserial*
+
+This will list the name of the USB2Dynamixel connected to your computer.
+ 
+12. Run ikaros in the terminal.
+cd {ikaros}/Bin/
+./ikaros -w -t ../MAMN10/Arm.ikc
+
+13. Connect to Ikaros using Chrome or Safari at http://127.0.0.1:8000
+
+
+
+Linux
+=====
+
+1. Install Code blocks (or your favorite IDE) from Ubuntu software center 
+
+2. 
+sudo apt-get update
+
+3. 
+sudo apt-get install libpng-dev g++ libgsl0-dev libjpeg62-dev cmake
+
+4. Get and extract ARToolKitPlus (https://launchpad.net/artoolkitplus) 
+wget https://launchpad.net/artoolkitplus/trunk/2.2.2/+download/ARToolKitPlus-2.2.2.tar.bz2
+tar xfv ARToolKitPlus-2.2.2.tar.bz2 
+
+5. Compile ARToolKitPlus
+
+cd {ARToolKitPlus}
+cmake .
+make
+sudo make install
+
+6. Install open Kinect
+
+wget -O- http://neuro.debian.net/lists/$(lsb_release -cs).us-nh | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list
+sudo apt-key adv --recv-keys --keyserver pgp.mit.edu 2649A5A9
+sudo apt-get update
+
+sudo apt-get install freenect
+sudo adduser $USER plugdev
+
+6. Download the ikaros source for MAMN10
+
+curl -OL http://www.ikaros-project.org/downloads/ikaros_MAMN10.zip
+unzip ikaros.zip
+
+7. Open the xcode project file in {ikaros}/Linux/Code Blocks/Ikaros/Ikaros.cbp
+
+8. Build project
+
+9. Edit the simulation configuration file {ikaros}/MAMN10/Arm.ikc with a text editor
+
+Change the device in the first Dynamixel module to fit the serial port on your computer.
+You can check the port then we USB2Dynamixel is connected to the USB port by typing:
+
+ls /dev/ttyUSB* in Linux
+
+
+10. Run ikaros from terminal using
+
+cd {Path.to.Ikaros}/Bin/
+./ikaros -w -t ../MAMN10/Arm.ikc
+
+11. Connect to Ikaros using Chrome at http://127.0.0.1:8000
+
+
+
+
+

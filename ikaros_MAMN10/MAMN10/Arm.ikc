@@ -1,0 +1,311 @@
+<?xml version = "1.0"?>
+
+<group title = "Robot Arm Example">
+	
+    <description>
+		This is an example file for using the LUCS MAMN10 Robot arm in ikaros.
+    </description>
+    
+    <!-- Servo part -->
+    <module
+    	class		 = "Dynamixel"
+		name		 = "Dynamixel"
+		device		 = "/dev/cu.usbserial-A40129FV"
+		_device		 = "/dev/ttyUSB0"
+		index_mode 	 = "indirect"
+		servo_id	 = "1 2 3"
+		angle_unit 	 = "degrees"
+		position_speed   = "0.5"
+	/>
+    
+    <module
+		class 		 = "Constant"
+		name 		 = "Position"
+		outputsize 	 = "3"
+		data 		 = "150 240 55"
+	/>
+    
+	<connection sourcemodule  = "Position" source  = "OUTPUT" targetmodule	 = "Dynamixel" target  = "INPUT" />
+    <!-- Vår kod -->
+    <module
+    		class 		 = "MyModule"
+		name 		 = "TestModule"
+    
+    />
+       <!--connection sourcemodule  = "MarkerTracker" source  = "MARKERS" targetmodule  = "TestModule" target  = "INPUT" /-->
+       
+
+       <connection sourcemodule  = "MarkerTracker" source  = "MARKERS" targetmodule  = "TestModule" target  = "INPUT_POS" />
+       <connection sourcemodule  = "TestModule" source  = "OUTPUT" targetmodule  = "Dynamixel" target  = "INPUT" />
+
+    
+	<!-- Kinnect part -->
+	<module
+		class 	 = "OpenKinect"
+		name 	 = "KINECT"
+     />
+
+	<!-- FaceDet part -->
+	 <module
+		class	 = "MPIFaceDetector"
+		name 	 = "FaceDetector"
+    />
+        
+    <connection sourcemodule  = "KINECT" source  = "INTENSITY" targetmodule  = "FaceDetector" target  = "INPUT" />
+
+	<!-- Artoolkit -->
+	<module
+			class   = "ARToolKitPlusModule"
+			name	= "MarkerTracker"			
+	/>
+
+	<connection sourcemodule = "KINECT" source = "INTENSITY" targetmodule = "MarkerTracker" target = "INPUT" delay="0" />
+
+	<connection sourcemodule = "KINECT" source = "RED" targetmodule = "MarkerTracker" target = "RED" delay="0" />
+	<connection sourcemodule = "KINECT" source = "GREEN" targetmodule = "MarkerTracker" target = "GREEN" delay="0" />		
+	<connection sourcemodule = "KINECT" source = "BLUE" targetmodule = "MarkerTracker" target = "BLUE" delay="0" />
+
+	
+        
+	<view name = "MAMN19" object_size = "50" >
+    	<!-- Dynamixel objects -->
+        <object
+            class	 = "Table"
+            title	 = "Positions"
+            module 	 = "Position"
+            source 	 = "OUTPUT"
+            x = "4" 	y = "0"
+            w = "2" 	h = "2" 
+            max		 = "3.14"
+        />
+        
+        <object
+            class	 = "Table"
+            title	 = "Actual Positions"
+            module	 = "Dynamixel"
+            source 	 = "OUTPUT"
+            x = "2" 	y = "0"
+            w = "2" 	h = "2" 
+            max		 = "3.14"
+        />
+
+        <object
+            class	 = "Slider"
+            title	 = "Pos1"
+            module 	 = "Position"
+            parameter  = "data"
+            select 	 = "0"
+            x = "0" 	y = "0" 
+            h = "3"
+            min = "0"
+            max = "300"
+        />
+        <object
+            class = "Slider"
+            title = "Pos2"
+            module  = "Position"
+            parameter  = "data"
+            select  = "1"
+            x = "0" y = "3" h = "3"
+            min = "0"
+            max = "300"
+        /> 
+              
+        <object
+			class = "Slider"
+			title = "Pos3"
+			module  = "Position"
+			parameter  = "data"
+			select  = "2"
+			x = "0" y = "6" h = "3"
+			min = "0"
+			max = "300"
+		/>
+		
+        <object
+            class = "Plot"
+            title = "Load"
+            module  = "Dynamixel"
+            source  = "LOAD"
+            x = "4" y = "4"
+            w = "2" h = "2"
+            min = "-1"
+            max = "1"
+        />
+        
+        <object
+            class = "BarGraph"
+            title = "Voltage (V)"
+            module  = "Dynamixel"
+            source  = "VOLTAGE"
+            x = "2" y = "2"
+            w = "2" h = "2" 
+            max = "20"
+        />
+        
+        <object
+            class = "BarGraph"
+            title = "Temperature (C)"
+            module  = "Dynamixel"
+            source  = "TEMPERATURE"
+            x = "2" y = "4"
+            w = "2" h = "2" 
+            max = "100"
+        />
+        
+        <object 
+        	class = "Image" 
+        	title = " " 
+        	dragarea = "no" 
+        	type = "file" 
+        	file = "Arm.jpg" 
+        	x = "2" y = "6"
+        	w = "4" h  = "4" 
+    	/>
+        	 
+        <_object
+            class = "Text"
+            text = "The three sliders control the position"
+            x = "4" y = "4"
+            w = "4" h = "2"
+        />
+
+		<!-- Face detection -->		
+		<object
+			class    = "Image"
+            title    = "Kinect camera"
+			type	 = "rgb"
+			module   = "KINECT+KINECT+KINECT"
+			source   = "RED+GREEN+BLUE"
+			x = "6" y = "0"
+			w = "6" h = "5"
+			min  = "0"
+			max  = "1"
+		/>
+			
+		<object
+            class	 = "Circle"
+            color	 = "red"
+			size	 = "0.025"
+			module	 = "FaceDetector"
+            source	 = "FACES"
+			x = "6" y = "0"
+			w = "6" h = "5"
+		/>
+            
+		<object
+        	class    = "Cross"
+            size     = "0.05"
+            module   = "FaceDetector"
+            source   = "FACE_POSITION"
+			x = "6" y = "0"
+			w = "6" h = "5"
+			/>
+			
+		<object
+        	class    = "Image"
+			title    = "Left Eye"
+			type	 = "gray"
+			module   = "FaceDetector"
+			source   = "EYE_LEFT"
+			x = "6" y = "5"
+			w = "2" h = "2"
+			min  = "0"
+			max  = "1"
+		/>
+		
+		<object
+			class    = "Image"
+			title    = "Right Eye"
+			type	 = "gray"
+			module   = "FaceDetector"
+			source   = "EYE_RIGHT"
+			x = "10" y = "5"
+			w = "2" h = "2"
+			min  = "0"
+			max  = "1"
+		/>
+		
+		<object
+			class    = "Image"
+			title    = "Output"
+			type	 = "gray"
+			module   = "FaceDetector"
+			source   = "OUTPUT"
+			x = "6" y = "7"
+			w = "3" h = "2"
+			min  = "0"
+			max  = "1"
+		/>
+		
+		<object
+			class    = "Image"
+			title    = "Face"
+			type	 = "gray"
+			module   = "FaceDetector"
+			source   = "FACE"
+			x = "9" y = "7"
+			w = "3" h = "2"
+		/>
+			
+		<!-- KINNECT objects -->
+        <object 
+        	class 	= "Image"
+        	type 	= "spectrum" 
+        	name 	= "Camera" 
+        	module  = "KINECT" 
+        	source  = "DEPTH" 
+        	x = "12" y = "0" 
+			w = "6" h = "5"
+        />
+        <_object 
+        	class 	= "Image" 
+        	type 	= "rgb" 
+        	name 	= "Camera" 
+        	module  = "KINECT+KINECT+KINECT" 
+        	source  = "RED+GREEN+BLUE" 
+        	x = "9" y = "2" 
+        	w = "3" h = "2" 
+        />
+        
+        <!-- Marker tracker -->
+        <object
+				class   = "Lines"
+				module  = "MarkerTracker"
+				source  = "EDGES"
+			x = "6" y = "0"
+			w = "6" h = "5"
+				min = "0"
+				max = "1"
+                color="red"
+                stroke_width="5"
+			/>
+
+			<object
+				class   = "Cross"
+				module  = "MarkerTracker"
+				source  = "MARKERS"
+                size = "0.03"
+                stroke_width="1"
+			x = "6" y = "0"
+			w = "6" h = "5"
+				min = "0"
+				max = "1"
+			/>
+
+        
+            <object
+                class   = "Label"
+                type    = "value"
+                select  = "2"
+                decimals = "0"
+                offset_x = "0.05"
+                offset_y = "0.05"
+                module  = "MarkerTracker"
+                source  = "MARKERS"
+			x = "6" y = "0"
+			w = "6" h = "5"
+ 			/>
+    </view>
+</group>
+ 

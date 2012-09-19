@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+
+<group name="ARToolKitPlusModule" description="finds markers">
+
+	<description type="text">
+		Module that finds markers in an image using ARToolKitPlus which is available at https://launchpad.net/artoolkitplus.
+	</description>
+
+	<example description="A simple example">
+		<module
+			class="ARToolKitPlusModule"
+			name="ARToolKitPlusModule"
+		/>
+	</example>
+
+	<parameter name="max_markers" type="int" default="10" description="Maximum number of markers to detect" />
+	<parameter name="calibration" type="array" default="640 426 294.458 161.609 675.381 681.446 -0.160115  -0.067107  0.016423  -0.001641 0 0 10" description="Camera calibration" />
+
+	<output name="MARKERS" description="Table with detected markers: camera position, id, matrix" size_x="20" size_param_y="max_markers" />
+
+	<input name="INPUT" description="The image input" />
+
+	<input name="RED" description="The image input" />
+	<input name="GREEN" description="The image input" />
+	<input name="BLUE" description="The image input" />
+
+	<output name="POS" description="Center of markers" size_x="3" size_y="20" />
+	<output name="EDGES" description="Array of edge corners" size_x="4" size_y="80" />
+
+	<output name="OUTPUT" description="The first output" size_set="INPUT" />
+	<output name="OUTPUT_RED" description="The first output" size_set="INPUT" />
+	<output name="OUTPUT_GREEN" description="The first output" size_set="INPUT" />
+	<output name="OUTPUT_BLUE" description="The first output" size_set="INPUT" />
+
+	<module class="ARToolKitPlusModule" />
+
+    <bug>
+     Only works with a single marker size (45 mm).
+    </bug>
+    
+	<author>
+		<name>Christian Balkenius</name>
+		<email>christian.balkenius@lucs.lu.se</email>
+		<affiliation>Lund University Cognitive Science</affiliation>
+		<homepage>http://www.lucs.lu.se/Christian.Balkenius</homepage>
+	</author>
+
+   <files>
+   		<file>ARToolKitPlus.h</file>
+   		<file>ARToolKitPlus.cc</file>
+   		<file>ARToolKitPlus.ikc</file>
+   </files>
+
+</group>
+
