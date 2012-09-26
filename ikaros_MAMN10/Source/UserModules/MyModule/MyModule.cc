@@ -74,13 +74,21 @@ MyModule::Init()
     input_matrix_size_x = GetInputSizeX("INPUT");
     input_matrix_size_y = GetInputSizeY("INPUT");
 */
-    input_matrix_pos = GetInputMatrix("INPUT_POS");
-    input_matrix_pos_size_x = GetInputSizeX("INPUT_POS");
-    input_matrix_pos_size_y = GetInputSizeY("INPUT_POS");
+   // input_matrix_pos = GetInputMatrix("INPUT_POS");
+    input_matrix_depth = GetInputMatrix("INPUT_DEPTH");
+    input_matrix_depth_size_x = GetInputSizeX("INPUT_DEPTH");
+    input_matrix_depth_size_y = GetInputSizeY("INPUT_DEPTH");
+    
+    printf("x: %d \n", input_matrix_depth_size_x);
+    printf("Y: %d \n", input_matrix_depth_size_y);
+
+
+    //input_matrix_pos_size_x = GetInputSizeX("INPUT_POS");
+    //input_matrix_pos_size_y = GetInputSizeY("INPUT_POS");
     // Do the same for the outputs
 
-    output_array = GetOutputArray("OUTPUT");
-    output_array_size = GetOutputSize("OUTPUT");
+    //output_array = GetOutputArray("OUTPUT");
+    //output_array_size = GetOutputSize("OUTPUT");
 
     //output_matrix = GetOutputMatrix("OUTPUT2");
     //output_matrix_size_x = GetOutputSizeX("OUTPUT2");
@@ -179,9 +187,40 @@ MyModule::Tick()
 
         //printf("/n");
             
-            fprintf(stderr,"%f \n", input_matrix_pos [0][3]);
+    float max = INT_MIN;
+    float min = INT_MAX;
+    int yMin = 0;
+    int xMin =0;
+    int yMax = 0;
+    int xMax = 0;
+    int i = 0;
+    int j = 0;
+    
+    for (i= 0; i < input_matrix_depth_size_y; i ++) {
+        for (j = 0; j < input_matrix_depth_size_x; j ++) {
+          
+            if (input_matrix_depth[i][j] > max) {
+                max = input_matrix_depth[i][j];
+                yMax = i;
+                xMax = j;
+
+            }
+            if (input_matrix_depth[i][j] < min){
+                min = input_matrix_depth[i][j];
+                yMin = i;
+                xMin = j;
+            }
+        }
+    }
+    //fprintf(stderr,"Max = %f, yMax = %d, xMax = %d \n", max, yMax, xMax);
+
+    fprintf(stderr,"Min = %f, yMin = %d, xMin = %d\n", min, yMin, xMin);
+
+    
+
+    
             //fprintf(stderr,"%f ", input_matrix_pos [0][4]);
-    if (input_matrix_pos[0][0] != -1) {
+    /*if (input_matrix_pos[0][0] != -1) {
         
     output_array[0] = 170 - 40 * input_matrix_pos[0][0];
     output_array[2] = 170 - 30 * input_matrix_pos[0][1];
@@ -189,6 +228,7 @@ MyModule::Tick()
         
         
     }
+     */
     
     /*
     if (input_matrix[0][2] == 1782) {

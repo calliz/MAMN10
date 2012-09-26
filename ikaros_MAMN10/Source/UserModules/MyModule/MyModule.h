@@ -53,6 +53,10 @@ public:
     float **    input_matrix_pos;
     int         input_matrix_pos_size_x;
     int         input_matrix_pos_size_y;
+    
+    float **    input_matrix_depth;
+    int         input_matrix_depth_size_x;
+    int         input_matrix_depth_size_y;
 
     float *     output_array;
     int         output_array_size;

@@ -152,9 +152,9 @@ FaceModule::Tick()
 	
 	printf("X=%lf Y=%lf", input_array[0], input_array[1]);
 	
-	output_array[0] = 130 + 80 * input_array[0];
+	output_array[0] = 210 - 80 * input_array[0];
     output_array[1] = 150;
-	output_array[2] = 130 + 80 * input_array[1];
+	output_array[2] = 210 - 80 * input_array[1];
     
         
 	

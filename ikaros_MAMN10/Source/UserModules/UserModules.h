@@ -25,6 +25,8 @@
 //
 //	Include all your modules here
 
+
+#include "UserModules/FaceModule/FaceModule.h"              // Change this to the name of your module
 #include "UserModules/MyModule/MyModule.h"              // Change this to the name of your module
 #include "UserModules/MinimalModule/MinimalModule.h"    // Change this to the name of your module
 
@@ -35,6 +37,7 @@ InitUserModules(Kernel & k)
 {
 //	Add a line for each user module here
 
+     k.AddClass("FaceModule", &FaceModule::Create, "Source/UserModules/FaceModule/");                  // Change this to the name and path of your module
     k.AddClass("MyModule", &MyModule::Create, "Source/UserModules/MyModule/");                  // Change this to the name and path of your module
     k.AddClass("MinimalModule", &MinimalModule::Create, "Source/UserModules/MinimalModule/");	// Change this to the name and path of your module
 }

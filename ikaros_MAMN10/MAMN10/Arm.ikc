@@ -8,7 +8,7 @@
     
     <!-- Servo part -->
     <module
-    	class		 = "Dynamixel"
+    		class		 = "Dynamixel"
 		name		 = "Dynamixel"
 		device		 = "/dev/cu.usbserial-A40129FV"
 		_device		 = "/dev/ttyUSB0"
@@ -25,19 +25,18 @@
 		data 		 = "150 240 55"
 	/>
     
-	<connection sourcemodule  = "Position" source  = "OUTPUT" targetmodule	 = "Dynamixel" target  = "INPUT" />
     <!-- Vår kod -->
     <module
     		class 		 = "MyModule"
 		name 		 = "TestModule"
     
     />
-       <!--connection sourcemodule  = "MarkerTracker" source  = "MARKERS" targetmodule  = "TestModule" target  = "INPUT" /-->
-       
-
-       <connection sourcemodule  = "MarkerTracker" source  = "MARKERS" targetmodule  = "TestModule" target  = "INPUT_POS" />
-       <connection sourcemodule  = "TestModule" source  = "OUTPUT" targetmodule  = "Dynamixel" target  = "INPUT" />
-
+    
+    <module
+    		class	= "FaceModule"
+    		name 	= "FaceModule"		
+    />
+    	
     
 	<!-- Kinnect part -->
 	<module
@@ -50,14 +49,24 @@
 		class	 = "MPIFaceDetector"
 		name 	 = "FaceDetector"
     />
-        
-    <connection sourcemodule  = "KINECT" source  = "INTENSITY" targetmodule  = "FaceDetector" target  = "INPUT" />
-
+    
+  
 	<!-- Artoolkit -->
 	<module
 			class   = "ARToolKitPlusModule"
 			name	= "MarkerTracker"			
 	/>
+	<connection sourcemodule  = "Position" source  = "OUTPUT" targetmodule	 = "Dynamixel" target  = "INPUT" />
+	<!--connection sourcemodule  = "MarkerTracker" source  = "MARKERS" targetmodule  = "TestModule" target  = "INPUT" /-->
+  
+       <connection sourcemodule  = "FaceModule" source = "OUTPUT" targetmodule  = "Dynamixel" target  = "INPUT" />
+       <connection sourcemodule  = "MarkerTracker" source  = "MARKERS" targetmodule  = "TestModule" target  = "INPUT_POS" />
+      <!-- <connection sourcemodule  = "TestModule" source  = "OUTPUT" targetmodule  = "Dynamixel" target  = "INPUT" /-->
+       <connection sourcemodule  = "KINECT" source  = "DEPTH" targetmodule  = "TestModule" target  = "INPUT_DEPTH" />
+  	<connection sourcemodule  = "FaceDetector" source = "FACE_POSITION" targetmodule  = "FaceModule" target  = "FACE_POSITION" />
+  
+   	 <connection sourcemodule  = "KINECT" source  = "INTENSITY" targetmodule  = "FaceDetector" target  = "INPUT" />
+
 
 	<connection sourcemodule = "KINECT" source = "INTENSITY" targetmodule = "MarkerTracker" target = "INPUT" delay="0" />
 
