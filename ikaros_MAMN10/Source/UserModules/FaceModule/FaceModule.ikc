@@ -21,7 +21,7 @@
 
 
 
-	<input name="FACE_POSITION" size="2" description="The first input" />
+	<input name="FACE_POSITION" size="3" description="The face position relative to the kinect. X, Y, Z" />
 
 
 	<output name="OUTPUT" description="The first output" size="3" />

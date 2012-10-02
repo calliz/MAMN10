@@ -54,8 +54,7 @@ FaceModule::Init()
     // GetIntValue gets parameter2 from the XML structure or
     // sets the parameter to the default value 2 if it is not found
     
-    // int_parameter = GetIntValue("parameter2");
-    
+  
     // This is were we get pointers to the inputs and outputs
 
     // Get a pointer to the input INPUT1 and its size which we set
@@ -124,37 +123,36 @@ FaceModule::~FaceModule()
 void
 FaceModule::Tick()
 {
-    // This is where you implement your algorithm
-    // to calculate the outputs from the inputs
+	float camera_y_deg = 43;
+	float camera_x_deg = 57;
+	int picture_width, picture_height, face_distance, face_x, face_y, face_x_cm, face_y_cm;
+	float x_angle, y_angle;
+	face_distance = input_array[2];
+	face_x = input_array[0];
+	face_y = input_array[1];
 
-    // Make a copy of the data on INPUT2 which is now
-    // in input_matrix to internal_matrix
-    // Arrays can be copied with copy_array
-    // To clear an array or matrix use reset_array and reset_matrix
-
-    //copy_matrix(internal_matrix, input_matrix, input_matrix_size_x, input_matrix_size_y);
-
-    // Calculate the output by iterating over the elements of the
-    // output matrix. Note the order of the indices into the matrix.
-    //
-    // In most cases it is much faster to put the for-loops with
-    // the row index (j) in the outer loop, because it will lead
-    // to more efficient cache use.
-
-    //for (int j=0; j<output_matrix_size_y; j++)
-    //    for (int i=0; i<output_matrix_size_x; i++)
-    //       output_matrix[j][i] = 0.5;
-
-    // Fill the output array with random values
-
-    //random(output_array, 0.0, 1.0, output_array_size);
+	//Bildens verkliga bredd utifrån ansiktets avstånd från kameran.
+	picture_width = (int) 2*face_distance * tan(camera_x_deg);
+	picture_height = (int) 2*face_distance * tan(camera_y_deg);
 	
+	//Ansiktets avstånd från bildens vänstra övre hörn.	
+	face_x_cm = face_x * picture_width;
+	face_y_cm = face_y * picture_height;
+
+	//Korrigera kring center.
+	face_x_cm = face_x_cm -picture_width/2;
+	face_y_cm = face_y_cm - picture_height/2;
 	
-	printf("X=%lf Y=%lf", input_array[0], input_array[1]);
+	//Räknar ut vinklen i x och y led mellan kinect kameran och ansiktet.
+	x_angle = atan(((float)face_x_cm/(float) face_distance));
+	y_angle = atan(((float)face_y_cm/(float) face_distance));
+
+
+	printf("X angle=%g Y angle=%g", x_angle, y_angle);
 	
-	output_array[0] = 210 - 80 * input_array[0];
-    output_array[1] = 150;
-	output_array[2] = 210 - 80 * input_array[1];
+	output_array[0] = 150 + x_angle;
+    	output_array[1] = 150;
+	output_array[2] = 150 + y_angle;
     
         
 	
