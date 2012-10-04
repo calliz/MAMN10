@@ -16,6 +16,7 @@
 		22D6B64815F8090700BF2BD7 /* libfreenect_sync.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D6B64615F8090700BF2BD7 /* libfreenect_sync.dylib */; };
 		22D6B64915F8090700BF2BD7 /* libfreenect.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D6B64715F8090700BF2BD7 /* libfreenect.dylib */; };
 		2582E85A15F9EBFB00D0BC67 /* libARToolkitPlus.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2582E85815F9EBFB00D0BC67 /* libARToolkitPlus.dylib */; };
+		41086E84161E0C5200108E1F /* Kluck.cc in Sources */ = {isa = PBXBuildFile; fileRef = 41086E81161E0C5200108E1F /* Kluck.cc */; };
 		41CFE223161310EA008C779A /* IKAROS.cc in Sources */ = {isa = PBXBuildFile; fileRef = 41CFDF0F161310EA008C779A /* IKAROS.cc */; };
 		41CFE224161310EA008C779A /* IKAROS_Math.cc in Sources */ = {isa = PBXBuildFile; fileRef = 41CFDF11161310EA008C779A /* IKAROS_Math.cc */; };
 		41CFE225161310EA008C779A /* IKAROS_Serial_BSD.cc in Sources */ = {isa = PBXBuildFile; fileRef = 41CFDF14161310EA008C779A /* IKAROS_Serial_BSD.cc */; };
@@ -283,6 +284,9 @@
 		2502530D1433385C002FAFFD /* EdgeDetectors_test.ikc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = EdgeDetectors_test.ikc; sourceTree = "<group>"; };
 		2502530F1433386B002FAFFD /* Morphology_test.ikc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Morphology_test.ikc; sourceTree = "<group>"; };
 		2582E85815F9EBFB00D0BC67 /* libARToolkitPlus.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libARToolkitPlus.dylib; path = Frameworks/ARToolKitPlus/libARToolkitPlus.dylib; sourceTree = "<group>"; };
+		41086E81161E0C5200108E1F /* Kluck.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Kluck.cc; sourceTree = "<group>"; };
+		41086E82161E0C5200108E1F /* Kluck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kluck.h; sourceTree = "<group>"; };
+		41086E83161E0C5200108E1F /* Kluck.ikc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Kluck.ikc; sourceTree = "<group>"; };
 		41CFDF0C161310EA008C779A /* IKAROS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKAROS.h; sourceTree = "<group>"; };
 		41CFDF0D161310EA008C779A /* IKAROS_System.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKAROS_System.h; sourceTree = "<group>"; };
 		41CFDF0F161310EA008C779A /* IKAROS.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IKAROS.cc; sourceTree = "<group>"; };
@@ -1058,6 +1062,16 @@
 				22D6B64615F8090700BF2BD7 /* libfreenect_sync.dylib */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		41086E80161E0C5200108E1F /* Kluck */ = {
+			isa = PBXGroup;
+			children = (
+				41086E81161E0C5200108E1F /* Kluck.cc */,
+				41086E82161E0C5200108E1F /* Kluck.h */,
+				41086E83161E0C5200108E1F /* Kluck.ikc */,
+			);
+			path = Kluck;
 			sourceTree = "<group>";
 		};
 		41CFDF0B161310EA008C779A /* Source */ = {
@@ -3182,6 +3196,7 @@
 		41CFE1D8161310EA008C779A /* UserModules */ = {
 			isa = PBXGroup;
 			children = (
+				41086E80161E0C5200108E1F /* Kluck */,
 				41CFE1D9161310EA008C779A /* FaceModule */,
 				41CFE1DD161310EA008C779A /* MinimalModule */,
 				41CFE1E1161310EA008C779A /* MyModule */,
@@ -3534,6 +3549,7 @@
 				41CFE2C8161310EA008C779A /* inspector.js in Sources */,
 				41CFE2C9161310EA008C779A /* viewer.js in Sources */,
 				41CFE2CA161310EA008C779A /* WebUI.cc in Sources */,
+				41086E84161E0C5200108E1F /* Kluck.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

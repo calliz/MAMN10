@@ -170,6 +170,8 @@ FaceModule::Tick()
 
     fprintf(stderr,"X angle=%g Y angle=%g\n ", x_angle, y_angle);
      */
+    
+   
 
     if(input_dist_array[0] < 60){
        
@@ -180,8 +182,8 @@ FaceModule::Tick()
     
     }else{
         output_array[0] = 200 - 100 * input_array[0];
-    	output_array[1] = 150;
-        output_array[2] = 210 - 80 * input_array[1];
+    	output_array[1] = 130;
+        output_array[2] = 230 - 80 * input_array[1];
     }
     
     /*
@@ -189,12 +191,6 @@ FaceModule::Tick()
     px/cm i HÖJDLED vid den aktuella distansen d är: (480 * 80)/(d * 63)
      */
     
-    /*
-    
-    output_array[0] = 200 - 100 * input_array[0];
-    output_array[1] = 150;
-    output_array[2] = 210 - 80 * input_array[1];
-    */    
 }
 
 

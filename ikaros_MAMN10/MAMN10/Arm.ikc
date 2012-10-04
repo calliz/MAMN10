@@ -11,20 +11,22 @@
     		class		 = "Dynamixel"
 		name		 = "Dynamixel"
 		device		 = "/dev/cu.usbserial-A40129FV"
+		_device		 = "/dev/ttyUSB0"
 		index_mode 	 = "indirect"
 		servo_id	 = "1 2 3"
 		angle_unit 	 = "degrees"
-		position_speed   = "0.4"
+		position_speed   = "0.3"
 	/>		
-		<!--feedback = "no" --/>
     
     <module
 		class 		 = "Constant"
 		name 		 = "Position"
 		outputsize 	 = "3"
-		data 		 = "150 240 55"
+		data 		 = "150 150 150"
 	/>
     
+    	<connection sourcemodule  = "Position" source  = "OUTPUT" targetmodule	 = "Dynamixel" target  = "INPUT" />
+
     <!-- Vår kod -->
     <module
     		class 		 = "MyModule"
@@ -36,6 +38,13 @@
     		class	= "FaceModule"
     		name 	= "FaceModule"		
     />
+    
+       <module
+    		class	= "Kluck"
+    		name 	= "Kluck"		
+    />
+    
+
     	
     
 	<!-- Kinnect part -->
@@ -56,22 +65,20 @@
 			class   = "ARToolKitPlusModule"
 			name	= "MarkerTracker"			
 	/>
-	<!--<connection sourcemodule  = "Position" source  = "OUTPUT" targetmodule	 = "Dynamixel" target  = "INPUT" />-->
-	<!--connection sourcemodule  = "MarkerTracker" source  = "MARKERS" targetmodule  = "TestModule" target  = "INPUT" /-->
-  
+	
+       <connection sourcemodule  = "FaceModule" source = "OUTPUT" targetmodule  = "Kluck" target  = "INPUT" />
+       <connection sourcemodule  = "Kluck" source = "OUTPUT" targetmodule  = "Dynamixel" target  = "INPUT" />
+
        <connection sourcemodule  = "FaceModule" source = "OUTPUT" targetmodule  = "Dynamixel" target  = "INPUT" />
         <connection sourcemodule  = "TestModule" source = "FACE_DISTANCE" targetmodule  = "FaceModule" target  = "FACE_DISTANCE" />
 
        <connection sourcemodule  = "MarkerTracker" source  = "MARKERS" targetmodule  = "TestModule" target  = "INPUT_POS" />
-      <!-- <connection sourcemodule  = "TestModule" source  = "OUTPUT" targetmodule  = "Dynamixel" target  = "INPUT" /-->
        <connection sourcemodule  = "KINECT" source  = "DEPTH" targetmodule  = "TestModule" target  = "INPUT_DEPTH" />
   	<connection sourcemodule  = "FaceDetector" source = "FACE_POSITION" targetmodule  = "FaceModule" target  = "FACE_POSITION" />
   	<connection sourcemodule  = "FaceDetector" source = "FACE_POSITION" targetmodule  = "TestModule" target  = "FACE_POSITION" />
 
   
-   	 <connection sourcemodule  = "KINECT" source  = "INTENSITY" targetmodule  = "FaceDetector" target  = "INPUT" />
-
-
+   	<connection sourcemodule  = "KINECT" source  = "INTENSITY" targetmodule  = "FaceDetector" target  = "INPUT" />
 	<connection sourcemodule = "KINECT" source = "INTENSITY" targetmodule = "MarkerTracker" target = "INPUT" delay="0" />
 	<connection sourcemodule = "KINECT" source = "RED" targetmodule = "MarkerTracker" target = "RED" delay="0" />
 	<connection sourcemodule = "KINECT" source = "GREEN" targetmodule = "MarkerTracker" target = "GREEN" delay="0" />		
@@ -81,7 +88,6 @@
         
 	<view name = "MAMN19" object_size = "50" >
     	<!-- Dynamixel objects -->
-        
         <object
             class	 = "Table"
             title	 = "Positions"
@@ -182,7 +188,6 @@
             x = "4" y = "4"
             w = "4" h = "2"
         />
-        
 
 		<!-- Face detection -->		
 		<object
@@ -292,7 +297,7 @@
 				min = "0"
 				max = "1"
                 color="red"
-                stroke_width="5"
+                stroke_width="1"
 			/>
 
 			<object

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<group name="Kluck" description="AGDAS module for random klucks">
+
+	<description type="text">
+		...
+	</description>
+
+	<example description="A simple example">
+		<module
+			class="Kluck"
+			name="Kluck"
+		/>
+	</example>
+
+
+	<input name="INPUT" description="Server current position" size="3" />
+
+	<output name="OUTPUT" description="Desired server position" size="3" />
+
+    
+	<module class="Kluck" />
+
+	<author>
+		<name>Christian Balkenius</name>
+		<email>christian.balkenius@lucs.lu.se</email>
+		<affiliation>Lund University Cognitive Science</affiliation>
+		<homepage>http://www.lucs.lu.se/Christian.Balkenius</homepage>
+	</author>
+
+   <files>
+   		<file>Kluck.h</file>
+   		<file>Kluck.cc</file>
+   		<file>Kluck.ikc</file>
+   </files>
+
+</group>
+

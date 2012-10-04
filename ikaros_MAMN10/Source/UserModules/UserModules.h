@@ -26,9 +26,11 @@
 //	Include all your modules here
 
 
-#include "UserModules/FaceModule/FaceModule.h"              // Change this to the name of your module
-#include "UserModules/MyModule/MyModule.h"              // Change this to the name of your module
-#include "UserModules/MinimalModule/MinimalModule.h"    // Change this to the name of your module
+#include "UserModules/FaceModule/FaceModule.h"             
+#include "UserModules/MyModule/MyModule.h"              
+#include "UserModules/MinimalModule/MinimalModule.h"     // Change this to the name of your module
+#include "UserModules/Kluck/Kluck.h"
+
 
 void InitUserModules(Kernel & k);
 
@@ -40,6 +42,7 @@ InitUserModules(Kernel & k)
      k.AddClass("FaceModule", &FaceModule::Create, "Source/UserModules/FaceModule/");                  // Change this to the name and path of your module
     k.AddClass("MyModule", &MyModule::Create, "Source/UserModules/MyModule/");                  // Change this to the name and path of your module
     k.AddClass("MinimalModule", &MinimalModule::Create, "Source/UserModules/MinimalModule/");	// Change this to the name and path of your module
+     k.AddClass("Kluck", &Kluck::Create, "Source/UserModules/Kluck/");      // Change this to the name and path of your module
 }
 
 

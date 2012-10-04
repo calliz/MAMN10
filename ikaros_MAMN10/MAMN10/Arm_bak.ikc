@@ -8,7 +8,7 @@
     
     <!-- Servo part -->
     <module
-    	class		 = "Dynamixel"
+    		class		 = "Dynamixel"
 		name		 = "Dynamixel"
 		device		 = "/dev/cu.usbserial-A40129FV"
 		_device		 = "/dev/ttyUSB0"
