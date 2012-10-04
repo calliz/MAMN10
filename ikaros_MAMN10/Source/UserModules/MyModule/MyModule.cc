@@ -75,12 +75,13 @@ MyModule::Init()
     input_matrix_size_y = GetInputSizeY("INPUT");
 */
    // input_matrix_pos = GetInputMatrix("INPUT_POS");
+    input_array = GetInputArray("FACE_POSITION");
+    input_array_size = GetInputSize("FACE_POSITION");
     input_matrix_depth = GetInputMatrix("INPUT_DEPTH");
     input_matrix_depth_size_x = GetInputSizeX("INPUT_DEPTH");
     input_matrix_depth_size_y = GetInputSizeY("INPUT_DEPTH");
     
-    printf("x: %d \n", input_matrix_depth_size_x);
-    printf("Y: %d \n", input_matrix_depth_size_y);
+    output_array = GetOutputArray("FACE_DISTANCE");
 
 
     //input_matrix_pos_size_x = GetInputSizeX("INPUT_POS");
@@ -181,86 +182,11 @@ MyModule::Tick()
      */
     
     
-    
-    
-    //for (int j=0; j<input_matrix_pos_size_y; j++){
+    output_array[0] = input_matrix_depth[(int)(input_array[1] * 480)][(int)(input_array[0] * 640)]; // observera Y först sedan X!
+    fprintf(stderr,"Face distance = %f\n",  output_array[0]); 
 
-        //printf("/n");
-            
-    float max = INT_MIN;
-    float min = INT_MAX;
-    int yMin = 0;
-    int xMin =0;
-    int yMax = 0;
-    int xMax = 0;
-    int i = 0;
-    int j = 0;
-    
-    for (i= 0; i < input_matrix_depth_size_y; i ++) {
-        for (j = 0; j < input_matrix_depth_size_x; j ++) {
-          
-            if (input_matrix_depth[i][j] > max) {
-                max = input_matrix_depth[i][j];
-                yMax = i;
-                xMax = j;
-
-            }
-            if (input_matrix_depth[i][j] < min){
-                min = input_matrix_depth[i][j];
-                yMin = i;
-                xMin = j;
-            }
-        }
-    }
-    //fprintf(stderr,"Max = %f, yMax = %d, xMax = %d \n", max, yMax, xMax);
-
-    fprintf(stderr,"Min = %f, yMin = %d, xMin = %d\n", min, yMin, xMin);
-
-    
-
-    
-            //fprintf(stderr,"%f ", input_matrix_pos [0][4]);
-    /*if (input_matrix_pos[0][0] != -1) {
-        
-    output_array[0] = 170 - 40 * input_matrix_pos[0][0];
-    output_array[2] = 170 - 30 * input_matrix_pos[0][1];
-    output_array[1] = 150;
-        
-        
-    }
-     */
-    
-    /*
-    if (input_matrix[0][2] == 1782) {
-        output_array[0] = 150;
-        output_array[1] = 150;
-        output_array[2] = 120;
-    }else if (input_matrix[0][2] == 1781) {
-        output_array[0] = 150;
-        output_array[1] = 150;
-        output_array[2] = 170;
-    }else if (input_matrix[0][2] == 1783) {
-        output_array[0] = 150;
-        output_array[1] = 150;
-        output_array[2] = 150;
-    }else if (input_matrix[0][2] == 1785) {
-        output_array[0] = 150;
-        output_array[1] = 150;
-        output_array[2] = 150;
-    }else if (input_matrix[0][2] == 1784) {
-        output_array[0] = 150;
-        output_array[1] = 150;
-        output_array[2] = 150;
-    }
-    */
-        
-    //for (int j=0; j<output_matrix_size_y; j++)
-     //for (int i=0; i<output_matrix_size_x; i++)
-     //       output_matrix[j][i] = 0.5;
-
-    // Fill the output array with random values
-
-    //random(output_array, 0.0, 1.0, output_array_size);
+    fprintf(stderr,"X = %d\n", (int)(input_array[0] * 640));
+    fprintf(stderr,"Y = %d\n", (int)(input_array[1] * 480));
 
 }
 

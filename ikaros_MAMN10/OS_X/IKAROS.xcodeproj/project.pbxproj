@@ -1807,9 +1807,9 @@
 		41CFE001161310EA008C779A /* Video */ = {
 			isa = PBXGroup;
 			children = (
+				41CFE011161310EA008C779A /* OpenKinect */,
 				41CFE002161310EA008C779A /* InputVideoQT */,
 				41CFE00B161310EA008C779A /* NetworkCamera */,
-				41CFE011161310EA008C779A /* OpenKinect */,
 			);
 			path = Video;
 			sourceTree = "<group>";

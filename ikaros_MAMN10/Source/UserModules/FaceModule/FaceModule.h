@@ -45,6 +45,9 @@ public:
 
     float *     input_array;
     int         input_array_size;
+    
+    float *     input_dist_array;
+    int         input_dist_array_size;
 
     float **    input_matrix;
     int         input_matrix_size_x;

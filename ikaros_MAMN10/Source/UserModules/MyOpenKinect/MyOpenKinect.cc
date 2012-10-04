@@ -20,7 +20,7 @@
 //
 
 #include "OpenKinect.h"
-#include "IKAROS_math.h"
+
 #ifdef OPENKINECT
 
 
@@ -51,8 +51,7 @@ OpenKinect::Tick()
     unsigned char *rgb_data;
     uint32_t timestamp;
 
-    int ret = freenect_sync_get_depth((void**)(&depth_buf), &timestamp, 0, FREENECT_DEPTH_11BIT);
-    // FREENECT_DEPTH_11BIT, FREENECT_DEPTH_REGISTERED, FREENECT_DEPTH_MM
+    int ret = freenect_sync_get_depth((void**)(&depth_buf), &timestamp, 0, FREENECT_DEPTH_REGISTERED); // FREENECT_DEPTH_11BIT, FREENECT_DEPTH_REGISTERED, FREENECT_DEPTH_MM
 
     if(ret < 0)
     {
@@ -86,9 +85,7 @@ OpenKinect::Tick()
     int s = 0;
     for(int j=0; j<480; j++)
         for(int i=0; i<640; i++)
-            //depth[j][i] = tan((float(depth_buf[s++])/1024+0.5)*33.825+5.7);
-            depth[j][i] = 34800/(1091.5 - float(depth_buf[s++]));
-
+            depth[j][i] = float(depth_buf[s++]);
 }
 
 #endif

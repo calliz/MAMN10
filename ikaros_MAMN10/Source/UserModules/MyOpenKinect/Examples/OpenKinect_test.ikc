@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<!--
+
+	Example file for OpenKinect
+ 
+-->
+
+<group title = "Kinect">
+
+    <module
+        class 			= "OpenKinect"
+        name 			= "KINECT"
+     />
+
+    <view name="Depth">
+        <object class="Image" type="spectrum" name="Camera" module = "KINECT" source = "DEPTH" x="0" y="0" w="3" h="2" />
+        <object class="Image" type="rgb" name="Camera" module = "KINECT+KINECT+KINECT" source = "RED+GREEN+BLUE" x="3" y="0" w="3" h="2" />
+    </view>
+    
+</group>
+

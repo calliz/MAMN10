@@ -65,6 +65,10 @@ FaceModule::Init()
 
     input_array = GetInputArray("FACE_POSITION");
     input_array_size = GetInputSize("FACE_POSITION");
+    
+    input_dist_array = GetInputArray("FACE_DISTANCE");
+    input_dist_array_size = GetInputSize("FACE_DISTANCE");
+    
 
     // Get pointer to a matrix and treat it as a matrix. If an array is
     // connected to this input, the size_y will be 1.
@@ -148,14 +152,37 @@ FaceModule::Tick()
 	y_angle = atan(((float)face_y_cm/(float) face_distance));
 
 
-	printf("X angle=%g Y angle=%g", x_angle, y_angle);
+    //random(output_array, 0.0, 1.0, output_array_size);
 	
-	output_array[0] = 150 + x_angle;
-    	output_array[1] = 150;
-	output_array[2] = 150 + y_angle;
+	
+	//printf("X=%lf Y=%lf", input_array[0], input_array[1]);
+
+    printf("X angle=%g Y angle=%g", x_angle, y_angle);
+
+    if(input_dist_array[0] < 75){
+       
+        output_array[0] = 200 - 100 * input_array[0];
+        output_array[1] = 60;
+        output_array[2] = 280 - 10 * input_array[1];
     
-        
-	
+    
+    }else{
+    	output_array[0] = 150 + x_angle;
+    	output_array[1] = 150;
+        output_array[2] = 150 + y_angle;
+    }
+    
+    /*
+    px/cm i SIDLED vid den aktuella distansen d är: (640 * 80)/(d * 87)
+    px/cm i HÖJDLED vid den aktuella distansen d är: (480 * 80)/(d * 63)
+     */
+    
+    /*
+    
+    output_array[0] = 200 - 100 * input_array[0];
+    output_array[1] = 150;
+    output_array[2] = 210 - 80 * input_array[1];
+    */    
 }
 
 
