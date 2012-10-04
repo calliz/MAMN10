@@ -56,7 +56,7 @@
 			class   = "ARToolKitPlusModule"
 			name	= "MarkerTracker"			
 	/>
-	<connection sourcemodule  = "Position" source  = "OUTPUT" targetmodule	 = "Dynamixel" target  = "INPUT" />
+	<!--<connection sourcemodule  = "Position" source  = "OUTPUT" targetmodule	 = "Dynamixel" target  = "INPUT" />-->
 	<!--connection sourcemodule  = "MarkerTracker" source  = "MARKERS" targetmodule  = "TestModule" target  = "INPUT" /-->
   
        <connection sourcemodule  = "FaceModule" source = "OUTPUT" targetmodule  = "Dynamixel" target  = "INPUT" />
@@ -81,7 +81,7 @@
         
 	<view name = "MAMN19" object_size = "50" >
     	<!-- Dynamixel objects -->
-        <!--
+        
         <object
             class	 = "Table"
             title	 = "Positions"
@@ -182,7 +182,7 @@
             x = "4" y = "4"
             w = "4" h = "2"
         />
-        --/>
+        
 
 		<!-- Face detection -->		
 		<object

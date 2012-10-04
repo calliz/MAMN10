@@ -21,7 +21,7 @@
 
 
 
-	<input name="FACE_POSITION" size="3" description="The face position relative to the kinect. X, Y, Z" />
+	<input name="FACE_POSITION" size="2" description="The face position relative to the kinect. X, Y, Z" />
 	<input name="FACE_DISTANCE" size="1" description="Distance to face in cm" />
 
 

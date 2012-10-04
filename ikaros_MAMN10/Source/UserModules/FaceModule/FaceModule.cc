@@ -127,29 +127,40 @@ FaceModule::~FaceModule()
 void
 FaceModule::Tick()
 {
-	float camera_y_deg = 43;
-	float camera_x_deg = 57;
+    /*
+	float camera_y_deg = 43 * pi /180;
+	float camera_x_deg = 57 * pi /180;
 	int picture_width, picture_height, face_distance, face_x, face_y, face_x_cm, face_y_cm;
 	float x_angle, y_angle;
-	face_distance = input_array[2];
-	face_x = input_array[0];
-	face_y = input_array[1];
+	face_distance = input_dist_array[0];
+	face_x = input_array[1];
+	face_y = input_array[0];
 
 	//Bildens verkliga bredd utifrån ansiktets avstånd från kameran.
-	picture_width = (int) 2*face_distance * tan(camera_x_deg);
-	picture_height = (int) 2*face_distance * tan(camera_y_deg);
+	picture_width = (int)(2*face_distance * tan(camera_x_deg));
+	picture_height = (int)(2*face_distance * tan(camera_y_deg));
 	
 	//Ansiktets avstånd från bildens vänstra övre hörn.	
 	face_x_cm = face_x * picture_width;
 	face_y_cm = face_y * picture_height;
 
 	//Korrigera kring center.
-	face_x_cm = face_x_cm -picture_width/2;
-	face_y_cm = face_y_cm - picture_height/2;
-	
+    
+    if(face_x_cm <= picture_width/2){
+        face_x_cm = picture_width/2 -face_x_cm;
+    }else{
+        face_x_cm = - picture_width/2 + (face_x_cm-picture_width) ;
+    }
+    
+    if(face_y_cm <= picture_height/2){
+        face_y_cm = picture_height/2 -face_y_cm;
+    }else{
+        face_y_cm = - picture_height/2 + (face_y_cm - picture_height) ;
+    }
+
 	//Räknar ut vinklen i x och y led mellan kinect kameran och ansiktet.
-	x_angle = atan(((float)face_x_cm/(float) face_distance));
-	y_angle = atan(((float)face_y_cm/(float) face_distance));
+	x_angle = atan(((float)face_x_cm/(float) face_distance)) * 180 / pi;
+	y_angle = atan(((float)face_y_cm/(float) face_distance)) * 180 / pi;
 
 
     //random(output_array, 0.0, 1.0, output_array_size);
@@ -157,9 +168,10 @@ FaceModule::Tick()
 	
 	//printf("X=%lf Y=%lf", input_array[0], input_array[1]);
 
-    printf("X angle=%g Y angle=%g", x_angle, y_angle);
+    fprintf(stderr,"X angle=%g Y angle=%g\n ", x_angle, y_angle);
+     */
 
-    if(input_dist_array[0] < 75){
+    if(input_dist_array[0] < 60){
        
         output_array[0] = 200 - 100 * input_array[0];
         output_array[1] = 60;
@@ -167,9 +179,9 @@ FaceModule::Tick()
     
     
     }else{
-    	output_array[0] = 150 + x_angle;
+        output_array[0] = 200 - 100 * input_array[0];
     	output_array[1] = 150;
-        output_array[2] = 150 + y_angle;
+        output_array[2] = 210 - 80 * input_array[1];
     }
     
     /*
