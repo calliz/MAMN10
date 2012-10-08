@@ -1,61 +1,66 @@
 
 #include "FaceModule.h"
+#include <sys/time.h>
+#include <unistd.h>  
 
+#define buffer_size 20
+#define number_of_objects 1
+#define velocity_distance 5
+#define x_activity_scale_factor 1
+#define y_activity_scale_factor 1
+#define z_activity_scale_factor 1
 // use the ikaros namespace to access the math library
 // this is preferred to using math.h
 
 
 using namespace ikaros;
+//Structs
+typedef struct
+{
+	int x_cm;
+	int y_cm;
+	int z_cm;
+	float micros;
+}buffer_node;
+
+typedef struct
+{
+	float x_velo;
+	float y_velo;
+	float z_velo;
+	float activity;
+}object;
+
+struct timeval tim; 
+
+//Global variables
+buffer_node* buffer;
+object* object_list;
+int current_node;
+
+FaceModule::FaceModule()
+{
+	buffer = (buffer_node*) calloc(sizeof(buffer_node), buffer_size);
+	object_list = (object*) calloc(sizeof(object), number_of_objects);
+	current_node = 0;
+}
 
 
 void
 FaceModule::Init()
 {
 
-    input_array = GetInputArray("FACE_POSITION");
-    input_array_size = GetInputSize("FACE_POSITION");
+    input_position_array = GetInputArray("FACE_POSITION");
+    input_position_array_size = GetInputSize("FACE_POSITION");
     
     input_dist_array = GetInputArray("FACE_DISTANCE");
     input_dist_array_size = GetInputSize("FACE_DISTANCE");
-    
 
-    // Get pointer to a matrix and treat it as a matrix. If an array is
-    // connected to this input, the size_y will be 1.
+    output_position_array = GetOutputArray("OBJECT_POSITION");
+    output_position_array_size = GetOutputSize("OBJECT_POSITION");
 
-    //input_matrix = GetInputMatrix("INPUT2");
-    //input_matrix_size_x = GetInputSizeX("INPUT2");
-    //input_matrix_size_y = GetInputSizeY("INPUT2");
-
-    // Do the same for the outputs
-
-    output_array = GetOutputArray("OUTPUT");
-    output_array_size = GetOutputSize("OUTPUT");
-
-    //output_matrix = GetOutputMatrix("OUTPUT2");
-    //output_matrix_size_x = GetOutputSizeX("OUTPUT2");
-    //output_matrix_size_y = GetOutputSizeY("OUTPUT2");
-
-    // Allocate some data structures to use internaly
-    // in the module
-
-    // Create an array with ten elements
-    // To access the array use internal_array[i].
-
-    //internal_array = create_array(10);
-
-    // Create a matrix with the same size as INPUT2
-    // IMPORTANT: For the matrix the sizes are given as X, Y
-    // which is the OPPOSITE of ROW, COLUMN.
-
-    //internal_matrix = create_matrix(input_matrix_size_x, input_matrix_size_y);
-
-    // To acces the matrix use internal_matrix[y][x].
-    //
-    // It is also possible to use the new operator to
-    // create arrays, but create_array and create_matix
-    // should be used to make sure that memeory is
-    // allocated in a way that is suitable for the math
-    // library and fast copying operations.
+    output_status_array = GetOutputArray("OBJECT_STATUS");
+    output_status_array_size = GetOutputSize("OBJECT_STATUS");
 }
 
 
@@ -66,84 +71,75 @@ FaceModule::~FaceModule()
 
     //destroy_array(internal_array);
     //destroy_matrix(internal_matrix);
+	
 
     // Do NOT destroy data structures that you got from the
     // kernel with GetInputArray, GetInputMatrix etc.
 }
 
+void calculateVelocity(){
+	int buddy_node = (current_node - velocity_distance) % buffer_size;
+	if(buddy_node<0){
+		buddy_node = buddy_node+buffer_size;
+	}
+	float buddy_micros;
+	if((buddy_micros = buffer[buddy_node].micros)!= 0){
+		object_list->x_velo= ((float) (buffer[current_node].x_cm - buffer[buddy_node].x_cm)) / (buffer[current_node].micros - buffer[buddy_node].micros);
+		object_list->y_velo= ((float) (buffer[current_node].y_cm - buffer[buddy_node].y_cm)) / (buffer[current_node].micros - buffer[buddy_node].micros);
+		object_list->z_velo= ((float) (buffer[current_node].z_cm - buffer[buddy_node].z_cm)) / (buffer[current_node].micros - buffer[buddy_node].micros);
+	}
+}
 
+void calculateActivity(){
+	object_list->activity= x_activity_scale_factor*fabs(object_list->x_velo*1000) + y_activity_scale_factor*fabs(object_list->y_velo*1000) + z_activity_scale_factor*fabs(object_list->z_velo*1000);
+}
+
+void setReturnValues()
+{
+	output_position_array[0]=buffer[current_node].x_cm;
+	output_position_array[1]=buffer[current_node].y_cm;
+	output_position_array[2]=buffer[current_node].z_cm;
+
+    output_status_array[0] = object_list->x_velo;
+	output_status_array[1] = object_list->y_velo;
+	output_status_array[2] = object_list->z_velo;
+	output_status_array[3] = object_list->activity;
+}
 
 void
 FaceModule::Tick()
 {
-    /*
-	float camera_y_deg = 43 * pi /180;
-	float camera_x_deg = 57 * pi /180;
-	int picture_width, picture_height, face_distance, face_x, face_y, face_x_cm, face_y_cm;
-	float x_angle, y_angle;
-	face_distance = input_dist_array[0];
-	face_x = input_array[1];
-	face_y = input_array[0];
-
-	//Bildens verkliga bredd utifrån ansiktets avstånd från kameran.
-	picture_width = (int)(2*face_distance * tan(camera_x_deg));
-	picture_height = (int)(2*face_distance * tan(camera_y_deg));
+	double x, y;
+	int x_cm, y_cm, z_cm;
 	
-	//Ansiktets avstånd från bildens vänstra övre hörn.	
-	face_x_cm = face_x * picture_width;
-	face_y_cm = face_y * picture_height;
+	x= input_position_array[1];
+	y = input_position_array[0];
+	z_cm = input_dist_array[0];
 
-	//Korrigera kring center.
-    
-    if(face_x_cm <= picture_width/2){
-        face_x_cm = picture_width/2 -face_x_cm;
-    }else{
-        face_x_cm = - picture_width/2 + (face_x_cm-picture_width) ;
-    }
-    
-    if(face_y_cm <= picture_height/2){
-        face_y_cm = picture_height/2 -face_y_cm;
-    }else{
-        face_y_cm = - picture_height/2 + (face_y_cm - picture_height) ;
-    }
+	float camera_y_deg = 43/2 * M_PI /180;
+	float camera_x_deg = 57/2 * M_PI /180;
+	int picture_width = (int)(2*z_cm * tan(camera_x_deg));
+	int picture_height = (int)(2*z_cm * tan(camera_y_deg));
+			
+	x_cm = (int)(x * picture_width);
+	y_cm = (int)(y * picture_height);
 
-	//Räknar ut vinklen i x och y led mellan kinect kameran och ansiktet.
-	x_angle = atan(((float)face_x_cm/(float) face_distance)) * 180 / pi;
-	y_angle = atan(((float)face_y_cm/(float) face_distance)) * 180 / pi;
-
-
-    //random(output_array, 0.0, 1.0, output_array_size);
+    gettimeofday(&tim, NULL);  
+    double t1=(tim.tv_usec); 
+	buffer[current_node].x_cm = x_cm;
+	buffer[current_node].y_cm = y_cm;
+	buffer[current_node].z_cm = z_cm;
+	buffer[current_node].micros = t1;
 	
-	
-	//printf("X=%lf Y=%lf", input_array[0], input_array[1]);
+	calculateVelocity();
+	calculateActivity();
 
-    fprintf(stderr,"X angle=%g Y angle=%g\n ", x_angle, y_angle);
-     */
+	setReturnValues();
+	current_node++;
 
-    if(input_dist_array[0] < 60){
-       
-        output_array[0] = 200 - 100 * input_array[0];
-        output_array[1] = 60;
-        output_array[2] = 280 - 10 * input_array[1];
-    
-    
-    }else{
-        output_array[0] = 200 - 100 * input_array[0];
-    	output_array[1] = 150;
-        output_array[2] = 210 - 80 * input_array[1];
-    }
-    
-    /*
-    px/cm i SIDLED vid den aktuella distansen d är: (640 * 80)/(d * 87)
-    px/cm i HÖJDLED vid den aktuella distansen d är: (480 * 80)/(d * 63)
-     */
-    
-    /*
-    
-    output_array[0] = 200 - 100 * input_array[0];
-    output_array[1] = 150;
-    output_array[2] = 210 - 80 * input_array[1];
-    */    
+	if(current_node == buffer_size){
+		current_node = 0;
+	}	   
 }
 
 
