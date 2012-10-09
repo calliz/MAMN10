@@ -1,5 +1,5 @@
 //
-//	Kluck.h		This file is a part of the IKAROS project
+//	ModeSelector.h		This file is a part of the IKAROS project
 //                  <Short description of the module>
 //
 //    Copyright (C) 2011 <Olle Klang>
@@ -24,18 +24,18 @@
 //
 //	<Additional description of the module>
 
-#ifndef Kluck_
-#define Kluck_
+#ifndef ModeSelector_
+#define ModeSelector_
 
 #include "IKAROS.h"
 
-class Kluck: public Module
+class ModeSelector: public Module
 {
 public:
-    static Module * Create(Parameter * p) { return new Kluck(p); }
+    static Module * Create(Parameter * p) { return new ModeSelector(p); }
 
-    Kluck(Parameter * p) : Module(p) {}
-    virtual ~Kluck();
+    ModeSelector(Parameter * p) : Module(p) {}
+    virtual ~ModeSelector();
 
     void 		Init();
     void 		Tick();
@@ -48,10 +48,7 @@ public:
 
     float *     output_array;
     int         output_array_size;
-    
-    float *     output_speed_array;
-    int         output_speed_array_size;
-
+  
     // internal data storage
 
     float *     internal_array;
@@ -59,9 +56,6 @@ public:
 
     // parameter values
 
-    float       threshold;
-    bool        up;
-    int         kluck_size;
 
 };
 

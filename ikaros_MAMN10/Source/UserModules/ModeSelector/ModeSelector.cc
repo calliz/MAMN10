@@ -1,5 +1,5 @@
 //
-//	Kluck.cc		This file is a part of the IKAROS project
+//	ModeSelector.cc		This file is a part of the IKAROS project
 //                      <Short description of the module>
 //
 //    Copyright (C) 2011 <Olle Klang>
@@ -20,10 +20,10 @@
 //
 //    See http://www.ikaros-project.org/ for more information.
 //
-//	Created: <2010-10-05>
+//	Created: <2010-10-09>
 //
 
-#include "Kluck.h"
+#include "ModeSelector.h"
 #include "IKAROS_math.h"
 
 // use the ikaros namespace to access the math library
@@ -34,25 +34,18 @@ using namespace ikaros;
 
 
 void
-Kluck::Init()
+ModeSelector::Init()
 {
-    threshold = 0.2;
-    kluck_size = 3;
-    up = false;
-    
-    input_array = GetInputArray("INPUT");
-    input_array_size = GetInputSize("INPUT");
-    
-    output_array = GetOutputArray("OUTPUT");
-    output_array_size = GetOutputSize("OUTPUT");
-    
-    output_speed_array = GetOutputArray("SPEED");
-    output_speed_array_size = GetOutputSize("SPEED");
+//    input_array = GetInputArray("INPUT");
+//    input_array_size = GetInputSize("INPUT");
+//    
+    output_array = GetOutputArray("STRESS");
+    output_array_size = GetOutputSize("STRESS");
     
 }
 
 
-Kluck::~Kluck()
+ModeSelector::~ModeSelector()
 {
     // Destroy data structures that you allocated in Init.
 
@@ -65,19 +58,8 @@ Kluck::~Kluck()
 
 
 void
-Kluck::Tick()
+ModeSelector::Tick()
 {
-    output_array[0] = input_array[0];
-    output_array[1] = input_array[1];
-    output_array[2] = input_array[2];
-
-    if (up) {
-        output_array[1] = input_array[1] - kluck_size;
-        up = false;
-        
-    }else if(random(0.1, 1) <= threshold){
-        output_array[1] = input_array[1] + kluck_size;
-        up = true;
-    }    
+    output_array[0] = 1;
 }
 

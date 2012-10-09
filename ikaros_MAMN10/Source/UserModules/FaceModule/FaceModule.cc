@@ -56,57 +56,16 @@ FaceModule::Init()
     
   
     // This is were we get pointers to the inputs and outputs
-
-    // Get a pointer to the input INPUT1 and its size which we set
-    // to 10 above
-    // It does not matter whether a matrix of array is connected
-    // to the inputs. We will teat it an array in this module
-    // anyway.
-
     input_array = GetInputArray("FACE_POSITION");
     input_array_size = GetInputSize("FACE_POSITION");
     
     input_dist_array = GetInputArray("FACE_DISTANCE");
     input_dist_array_size = GetInputSize("FACE_DISTANCE");
-    
-
-    // Get pointer to a matrix and treat it as a matrix. If an array is
-    // connected to this input, the size_y will be 1.
-
-    //input_matrix = GetInputMatrix("INPUT2");
-    //input_matrix_size_x = GetInputSizeX("INPUT2");
-    //input_matrix_size_y = GetInputSizeY("INPUT2");
 
     // Do the same for the outputs
-
     output_array = GetOutputArray("OUTPUT");
     output_array_size = GetOutputSize("OUTPUT");
 
-    //output_matrix = GetOutputMatrix("OUTPUT2");
-    //output_matrix_size_x = GetOutputSizeX("OUTPUT2");
-    //output_matrix_size_y = GetOutputSizeY("OUTPUT2");
-
-    // Allocate some data structures to use internaly
-    // in the module
-
-    // Create an array with ten elements
-    // To access the array use internal_array[i].
-
-    //internal_array = create_array(10);
-
-    // Create a matrix with the same size as INPUT2
-    // IMPORTANT: For the matrix the sizes are given as X, Y
-    // which is the OPPOSITE of ROW, COLUMN.
-
-    //internal_matrix = create_matrix(input_matrix_size_x, input_matrix_size_y);
-
-    // To acces the matrix use internal_matrix[y][x].
-    //
-    // It is also possible to use the new operator to
-    // create arrays, but create_array and create_matix
-    // should be used to make sure that memeory is
-    // allocated in a way that is suitable for the math
-    // library and fast copying operations.
 }
 
 

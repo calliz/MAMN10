@@ -15,7 +15,7 @@
 		index_mode 	 = "indirect"
 		servo_id	 = "1 2 3"
 		angle_unit 	 = "degrees"
-		position_speed   = "0.3"
+		position_speed   = "0.1"
 	/>		
     
     <module
@@ -25,7 +25,7 @@
 		data 		 = "150 150 150"
 	/>
     
-    	<connection sourcemodule  = "Position" source  = "OUTPUT" targetmodule	 = "Dynamixel" target  = "INPUT" />
+    	<!--<connection sourcemodule  = "Position" source  = "OUTPUT" targetmodule	 = "Dynamixel" target  = "INPUT" /> -->
 
     <!-- Vår kod -->
     <module
@@ -39,11 +39,25 @@
     		name 	= "FaceModule"		
     />
     
-       <module
+   <!-- <module
     		class	= "Kluck"
     		name 	= "Kluck"		
+    />-->
+    
+          <module
+    		class	= "Movement"
+    		name 	= "Movement"		
     />
     
+              <module
+    		class	= "ModeSelector"
+    		name 	= "Stress"		
+    />
+
+          <module
+    		class	= "FocusSelector"
+    		name 	= "FocusSelector"		
+    />    
 
     	
     
@@ -65,11 +79,14 @@
 			class   = "ARToolKitPlusModule"
 			name	= "MarkerTracker"			
 	/>
-	
-       <connection sourcemodule  = "FaceModule" source = "OUTPUT" targetmodule  = "Kluck" target  = "INPUT" />
+	<connection sourcemodule = "FocusSelector" source = "FOCUS" targetmodule  = "Movement" target = "FOCUS" />
+	<connection sourcemodule = "Stress" source = "STRESS" targetmodule  = "Movement" target  = "STRESS" />
+	<connection sourcemodule = "Movement" source = "OUTPUT" targetmodule  = "Dynamixel" target  = "INPUT" />
+
+        <!-- <connection sourcemodule  = "Movement" source = "OUTPUT" targetmodule  = "Kluck" target  = "INPUT" />
        <connection sourcemodule  = "Kluck" source = "OUTPUT" targetmodule  = "Dynamixel" target  = "INPUT" />
 
-       <connection sourcemodule  = "FaceModule" source = "OUTPUT" targetmodule  = "Dynamixel" target  = "INPUT" />
+     <connection sourcemodule  = "FaceModule" source = "OUTPUT" targetmodule  = "Dynamixel" target  = "INPUT" />-->
         <connection sourcemodule  = "TestModule" source = "FACE_DISTANCE" targetmodule  = "FaceModule" target  = "FACE_DISTANCE" />
 
        <connection sourcemodule  = "MarkerTracker" source  = "MARKERS" targetmodule  = "TestModule" target  = "INPUT_POS" />

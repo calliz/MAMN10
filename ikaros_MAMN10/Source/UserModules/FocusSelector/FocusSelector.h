@@ -1,5 +1,5 @@
 //
-//	Kluck.h		This file is a part of the IKAROS project
+//	FocusSelector.h		This file is a part of the IKAROS project
 //                  <Short description of the module>
 //
 //    Copyright (C) 2011 <Olle Klang>
@@ -20,22 +20,22 @@
 //
 //    See http://www.ikaros-project.org/ for more information.
 //
-//	Created: <2010-10-05>
+//	Created: <2010-10-09>
 //
 //	<Additional description of the module>
 
-#ifndef Kluck_
-#define Kluck_
+#ifndef FocusSelector_
+#define FocusSelector_
 
 #include "IKAROS.h"
 
-class Kluck: public Module
+class FocusSelector: public Module
 {
 public:
-    static Module * Create(Parameter * p) { return new Kluck(p); }
+    static Module * Create(Parameter * p) { return new FocusSelector(p); }
 
-    Kluck(Parameter * p) : Module(p) {}
-    virtual ~Kluck();
+    FocusSelector(Parameter * p) : Module(p) {}
+    virtual ~FocusSelector();
 
     void 		Init();
     void 		Tick();
@@ -43,14 +43,14 @@ public:
     // pointers to inputs and outputs
     // and integers to represent their sizes
 
-    float *     input_array;
-    int         input_array_size;
-
-    float *     output_array;
-    int         output_array_size;
+    float *     input_objects_array;
+    int         input_objects_array_size;
     
-    float *     output_speed_array;
-    int         output_speed_array_size;
+    float *     input_stress_array;
+    int         input_stress_array_size;
+
+    float *     output_focus_array;
+    int         output_focus_array_size;
 
     // internal data storage
 
@@ -58,10 +58,6 @@ public:
     float **    internal_matrix;
 
     // parameter values
-
-    float       threshold;
-    bool        up;
-    int         kluck_size;
 
 };
 

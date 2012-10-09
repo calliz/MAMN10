@@ -25,7 +25,9 @@
 //
 //	Include all your modules here
 
-
+#include "UserModules/FocusSelector/FocusSelector.h"
+#include "UserModules/ModeSelector/ModeSelector.h"
+#include "UserModules/Movement/Movement.h"
 #include "UserModules/FaceModule/FaceModule.h"             
 #include "UserModules/MyModule/MyModule.h"              
 #include "UserModules/MinimalModule/MinimalModule.h"     // Change this to the name of your module
@@ -39,10 +41,13 @@ InitUserModules(Kernel & k)
 {
 //	Add a line for each user module here
 
-     k.AddClass("FaceModule", &FaceModule::Create, "Source/UserModules/FaceModule/");                  // Change this to the name and path of your module
-    k.AddClass("MyModule", &MyModule::Create, "Source/UserModules/MyModule/");                  // Change this to the name and path of your module
-    k.AddClass("MinimalModule", &MinimalModule::Create, "Source/UserModules/MinimalModule/");	// Change this to the name and path of your module
-     k.AddClass("Kluck", &Kluck::Create, "Source/UserModules/Kluck/");      // Change this to the name and path of your module
+    k.AddClass("FocusSelector", &FocusSelector::Create, "Source/UserModules/FocusSelector/");
+    k.AddClass("ModeSelector", &ModeSelector::Create, "Source/UserModules/ModeSelector/");
+     k.AddClass("Movement", &Movement::Create, "Source/UserModules/Movement/");
+     k.AddClass("FaceModule", &FaceModule::Create, "Source/UserModules/FaceModule/");
+    k.AddClass("MyModule", &MyModule::Create, "Source/UserModules/MyModule/");
+    k.AddClass("MinimalModule", &MinimalModule::Create, "Source/UserModules/MinimalModule/");	
+     k.AddClass("Kluck", &Kluck::Create, "Source/UserModules/Kluck/");
 }
 
 

@@ -1,5 +1,5 @@
 //
-//	Kluck.h		This file is a part of the IKAROS project
+//	Movement.h		This file is a part of the IKAROS project
 //                  <Short description of the module>
 //
 //    Copyright (C) 2011 <Olle Klang>
@@ -20,22 +20,22 @@
 //
 //    See http://www.ikaros-project.org/ for more information.
 //
-//	Created: <2010-10-05>
+//	Created: <2010-10-06>
 //
 //	<Additional description of the module>
 
-#ifndef Kluck_
-#define Kluck_
+#ifndef Movement_
+#define Movement_
 
 #include "IKAROS.h"
 
-class Kluck: public Module
+class Movement: public Module
 {
 public:
-    static Module * Create(Parameter * p) { return new Kluck(p); }
+    static Module * Create(Parameter * p) { return new Movement(p); }
 
-    Kluck(Parameter * p) : Module(p) {}
-    virtual ~Kluck();
+    Movement(Parameter * p) : Module(p) {}
+    virtual ~Movement();
 
     void 		Init();
     void 		Tick();
@@ -43,26 +43,29 @@ public:
     // pointers to inputs and outputs
     // and integers to represent their sizes
 
-    float *     input_array;
-    int         input_array_size;
-
+    float *     stress_array;
+    int         stress_array_size;
+    
+    float *     focus_array;
+    int         focus_array_size;
+    
     float *     output_array;
     int         output_array_size;
-    
-    float *     output_speed_array;
-    int         output_speed_array_size;
 
     // internal data storage
 
-    float *     internal_array;
+    float *     last_position_array;
     float **    internal_matrix;
 
     // parameter values
-
-    float       threshold;
+    
     bool        up;
-    int         kluck_size;
-
+    bool        rotated;
+    bool        egg_back;
+    bool        initiated_move_a;
+    bool        initiated_move_b;
+    bool        initiated_move_c;
+    float       float_parameter;
 };
 
 #endif

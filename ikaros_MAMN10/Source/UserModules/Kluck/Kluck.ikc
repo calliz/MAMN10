@@ -17,15 +17,17 @@
 	<input name="INPUT" description="Server current position" size="3" />
 
 	<output name="OUTPUT" description="Desired server position" size="3" />
+    <output name="SPEED" description="Desired server speed" size="3" />
+
 
     
 	<module class="Kluck" />
 
 	<author>
-		<name>Christian Balkenius</name>
-		<email>christian.balkenius@lucs.lu.se</email>
-		<affiliation>Lund University Cognitive Science</affiliation>
-		<homepage>http://www.lucs.lu.se/Christian.Balkenius</homepage>
+		<name>Olle Klang</name>
+		<email></email>
+		<affiliation></affiliation>
+		<homepage></homepage>
 	</author>
 
    <files>

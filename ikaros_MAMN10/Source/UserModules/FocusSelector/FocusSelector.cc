@@ -1,5 +1,5 @@
 //
-//	Kluck.cc		This file is a part of the IKAROS project
+//	FocusSelector.cc		This file is a part of the IKAROS project
 //                      <Short description of the module>
 //
 //    Copyright (C) 2011 <Olle Klang>
@@ -23,7 +23,7 @@
 //	Created: <2010-10-05>
 //
 
-#include "Kluck.h"
+#include "FocusSelector.h"
 #include "IKAROS_math.h"
 
 // use the ikaros namespace to access the math library
@@ -34,25 +34,21 @@ using namespace ikaros;
 
 
 void
-Kluck::Init()
+FocusSelector::Init()
 {
-    threshold = 0.2;
-    kluck_size = 3;
-    up = false;
+//    input_objects_array = GetInputArray("OBJECTS_STATUS");
+//    input_objects_array_size = GetInputSize("OBJECTS_STATUS");
+//    
+//    input_stress_array = GetInputArray("STRESS");
+//    input_stress_array_size = GetInputSize("STRESS");
     
-    input_array = GetInputArray("INPUT");
-    input_array_size = GetInputSize("INPUT");
-    
-    output_array = GetOutputArray("OUTPUT");
-    output_array_size = GetOutputSize("OUTPUT");
-    
-    output_speed_array = GetOutputArray("SPEED");
-    output_speed_array_size = GetOutputSize("SPEED");
+    output_focus_array = GetOutputArray("FOCUS");
+    output_focus_array_size = GetOutputSize("FOCUS");
     
 }
 
 
-Kluck::~Kluck()
+FocusSelector::~FocusSelector()
 {
     // Destroy data structures that you allocated in Init.
 
@@ -65,19 +61,11 @@ Kluck::~Kluck()
 
 
 void
-Kluck::Tick()
+FocusSelector::Tick()
 {
-    output_array[0] = input_array[0];
-    output_array[1] = input_array[1];
-    output_array[2] = input_array[2];
-
-    if (up) {
-        output_array[1] = input_array[1] - kluck_size;
-        up = false;
-        
-    }else if(random(0.1, 1) <= threshold){
-        output_array[1] = input_array[1] + kluck_size;
-        up = true;
-    }    
+    output_focus_array[0] = 320;
+    output_focus_array[1] = 240;
+    output_focus_array[2] = 70;
+  
 }
 

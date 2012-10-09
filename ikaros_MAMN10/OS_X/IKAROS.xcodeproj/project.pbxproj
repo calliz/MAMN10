@@ -17,6 +17,9 @@
 		22D6B64915F8090700BF2BD7 /* libfreenect.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 22D6B64715F8090700BF2BD7 /* libfreenect.dylib */; };
 		2582E85A15F9EBFB00D0BC67 /* libARToolkitPlus.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2582E85815F9EBFB00D0BC67 /* libARToolkitPlus.dylib */; };
 		41086E84161E0C5200108E1F /* Kluck.cc in Sources */ = {isa = PBXBuildFile; fileRef = 41086E81161E0C5200108E1F /* Kluck.cc */; };
+		4116AE43161ED77000BAAA0A /* Movement.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4116AE40161ED77000BAAA0A /* Movement.cc */; };
+		414D8C391624046D00009018 /* FocusSelector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 414D8C321624046D00009018 /* FocusSelector.cc */; };
+		414D8C3A1624046D00009018 /* ModeSelector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 414D8C361624046D00009018 /* ModeSelector.cc */; };
 		41CFE223161310EA008C779A /* IKAROS.cc in Sources */ = {isa = PBXBuildFile; fileRef = 41CFDF0F161310EA008C779A /* IKAROS.cc */; };
 		41CFE224161310EA008C779A /* IKAROS_Math.cc in Sources */ = {isa = PBXBuildFile; fileRef = 41CFDF11161310EA008C779A /* IKAROS_Math.cc */; };
 		41CFE225161310EA008C779A /* IKAROS_Serial_BSD.cc in Sources */ = {isa = PBXBuildFile; fileRef = 41CFDF14161310EA008C779A /* IKAROS_Serial_BSD.cc */; };
@@ -287,6 +290,15 @@
 		41086E81161E0C5200108E1F /* Kluck.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Kluck.cc; sourceTree = "<group>"; };
 		41086E82161E0C5200108E1F /* Kluck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kluck.h; sourceTree = "<group>"; };
 		41086E83161E0C5200108E1F /* Kluck.ikc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Kluck.ikc; sourceTree = "<group>"; };
+		4116AE40161ED77000BAAA0A /* Movement.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Movement.cc; sourceTree = "<group>"; };
+		4116AE41161ED77000BAAA0A /* Movement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Movement.h; sourceTree = "<group>"; };
+		4116AE42161ED77000BAAA0A /* Movement.ikc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Movement.ikc; sourceTree = "<group>"; };
+		414D8C321624046D00009018 /* FocusSelector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FocusSelector.cc; sourceTree = "<group>"; };
+		414D8C331624046D00009018 /* FocusSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FocusSelector.h; sourceTree = "<group>"; };
+		414D8C341624046D00009018 /* FocusSelector.ikc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = FocusSelector.ikc; sourceTree = "<group>"; };
+		414D8C361624046D00009018 /* ModeSelector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ModeSelector.cc; sourceTree = "<group>"; };
+		414D8C371624046D00009018 /* ModeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModeSelector.h; sourceTree = "<group>"; };
+		414D8C381624046D00009018 /* ModeSelector.ikc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ModeSelector.ikc; sourceTree = "<group>"; };
 		41CFDF0C161310EA008C779A /* IKAROS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKAROS.h; sourceTree = "<group>"; };
 		41CFDF0D161310EA008C779A /* IKAROS_System.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKAROS_System.h; sourceTree = "<group>"; };
 		41CFDF0F161310EA008C779A /* IKAROS.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IKAROS.cc; sourceTree = "<group>"; };
@@ -1072,6 +1084,36 @@
 				41086E83161E0C5200108E1F /* Kluck.ikc */,
 			);
 			path = Kluck;
+			sourceTree = "<group>";
+		};
+		4116AE3F161ED77000BAAA0A /* Movement */ = {
+			isa = PBXGroup;
+			children = (
+				4116AE40161ED77000BAAA0A /* Movement.cc */,
+				4116AE41161ED77000BAAA0A /* Movement.h */,
+				4116AE42161ED77000BAAA0A /* Movement.ikc */,
+			);
+			path = Movement;
+			sourceTree = "<group>";
+		};
+		414D8C311624046D00009018 /* FocusSelector */ = {
+			isa = PBXGroup;
+			children = (
+				414D8C321624046D00009018 /* FocusSelector.cc */,
+				414D8C331624046D00009018 /* FocusSelector.h */,
+				414D8C341624046D00009018 /* FocusSelector.ikc */,
+			);
+			path = FocusSelector;
+			sourceTree = "<group>";
+		};
+		414D8C351624046D00009018 /* ModeSelector */ = {
+			isa = PBXGroup;
+			children = (
+				414D8C361624046D00009018 /* ModeSelector.cc */,
+				414D8C371624046D00009018 /* ModeSelector.h */,
+				414D8C381624046D00009018 /* ModeSelector.ikc */,
+			);
+			path = ModeSelector;
 			sourceTree = "<group>";
 		};
 		41CFDF0B161310EA008C779A /* Source */ = {
@@ -3196,8 +3238,11 @@
 		41CFE1D8161310EA008C779A /* UserModules */ = {
 			isa = PBXGroup;
 			children = (
-				41086E80161E0C5200108E1F /* Kluck */,
+				414D8C311624046D00009018 /* FocusSelector */,
+				414D8C351624046D00009018 /* ModeSelector */,
+				4116AE3F161ED77000BAAA0A /* Movement */,
 				41CFE1D9161310EA008C779A /* FaceModule */,
+				41086E80161E0C5200108E1F /* Kluck */,
 				41CFE1DD161310EA008C779A /* MinimalModule */,
 				41CFE1E1161310EA008C779A /* MyModule */,
 				41CFE1E7161310EA008C779A /* UserModules.h */,
@@ -3550,6 +3595,9 @@
 				41CFE2C9161310EA008C779A /* viewer.js in Sources */,
 				41CFE2CA161310EA008C779A /* WebUI.cc in Sources */,
 				41086E84161E0C5200108E1F /* Kluck.cc in Sources */,
+				4116AE43161ED77000BAAA0A /* Movement.cc in Sources */,
+				414D8C391624046D00009018 /* FocusSelector.cc in Sources */,
+				414D8C3A1624046D00009018 /* ModeSelector.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
