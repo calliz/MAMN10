@@ -20,6 +20,7 @@
 		4116AE43161ED77000BAAA0A /* Movement.cc in Sources */ = {isa = PBXBuildFile; fileRef = 4116AE40161ED77000BAAA0A /* Movement.cc */; };
 		414D8C391624046D00009018 /* FocusSelector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 414D8C321624046D00009018 /* FocusSelector.cc */; };
 		414D8C3A1624046D00009018 /* ModeSelector.cc in Sources */ = {isa = PBXBuildFile; fileRef = 414D8C361624046D00009018 /* ModeSelector.cc */; };
+		416B8ECF16244A3100B3E0BF /* ObjectModule.cc in Sources */ = {isa = PBXBuildFile; fileRef = 416B8EC916244A3100B3E0BF /* ObjectModule.cc */; };
 		41CFE223161310EA008C779A /* IKAROS.cc in Sources */ = {isa = PBXBuildFile; fileRef = 41CFDF0F161310EA008C779A /* IKAROS.cc */; };
 		41CFE224161310EA008C779A /* IKAROS_Math.cc in Sources */ = {isa = PBXBuildFile; fileRef = 41CFDF11161310EA008C779A /* IKAROS_Math.cc */; };
 		41CFE225161310EA008C779A /* IKAROS_Serial_BSD.cc in Sources */ = {isa = PBXBuildFile; fileRef = 41CFDF14161310EA008C779A /* IKAROS_Serial_BSD.cc */; };
@@ -299,6 +300,9 @@
 		414D8C361624046D00009018 /* ModeSelector.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ModeSelector.cc; sourceTree = "<group>"; };
 		414D8C371624046D00009018 /* ModeSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModeSelector.h; sourceTree = "<group>"; };
 		414D8C381624046D00009018 /* ModeSelector.ikc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ModeSelector.ikc; sourceTree = "<group>"; };
+		416B8EC916244A3100B3E0BF /* ObjectModule.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectModule.cc; sourceTree = "<group>"; };
+		416B8ECA16244A3100B3E0BF /* ObjectModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectModule.h; sourceTree = "<group>"; };
+		416B8ECB16244A3100B3E0BF /* ObjectModule.ikc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ObjectModule.ikc; sourceTree = "<group>"; };
 		41CFDF0C161310EA008C779A /* IKAROS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKAROS.h; sourceTree = "<group>"; };
 		41CFDF0D161310EA008C779A /* IKAROS_System.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IKAROS_System.h; sourceTree = "<group>"; };
 		41CFDF0F161310EA008C779A /* IKAROS.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IKAROS.cc; sourceTree = "<group>"; };
@@ -1114,6 +1118,16 @@
 				414D8C381624046D00009018 /* ModeSelector.ikc */,
 			);
 			path = ModeSelector;
+			sourceTree = "<group>";
+		};
+		416B8EC716244A3100B3E0BF /* ObjectModule */ = {
+			isa = PBXGroup;
+			children = (
+				416B8EC916244A3100B3E0BF /* ObjectModule.cc */,
+				416B8ECA16244A3100B3E0BF /* ObjectModule.h */,
+				416B8ECB16244A3100B3E0BF /* ObjectModule.ikc */,
+			);
+			path = ObjectModule;
 			sourceTree = "<group>";
 		};
 		41CFDF0B161310EA008C779A /* Source */ = {
@@ -3238,6 +3252,7 @@
 		41CFE1D8161310EA008C779A /* UserModules */ = {
 			isa = PBXGroup;
 			children = (
+				416B8EC716244A3100B3E0BF /* ObjectModule */,
 				414D8C311624046D00009018 /* FocusSelector */,
 				414D8C351624046D00009018 /* ModeSelector */,
 				4116AE3F161ED77000BAAA0A /* Movement */,
@@ -3598,6 +3613,7 @@
 				4116AE43161ED77000BAAA0A /* Movement.cc in Sources */,
 				414D8C391624046D00009018 /* FocusSelector.cc in Sources */,
 				414D8C3A1624046D00009018 /* ModeSelector.cc in Sources */,
+				416B8ECF16244A3100B3E0BF /* ObjectModule.cc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

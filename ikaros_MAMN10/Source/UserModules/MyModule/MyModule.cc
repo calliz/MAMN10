@@ -183,10 +183,10 @@ MyModule::Tick()
     
     
     output_array[0] = input_matrix_depth[(int)(input_array[1] * 480)][(int)(input_array[0] * 640)]; // observera Y först sedan X!
-    fprintf(stderr,"Face distance = %f\n",  output_array[0]); 
-
-    fprintf(stderr,"X = %d\n", (int)(input_array[0] * 640));
-    fprintf(stderr,"Y = %d\n", (int)(input_array[1] * 480));
+//    fprintf(stderr,"Face distance = %f\n",  output_array[0]); 
+//
+//    fprintf(stderr,"X = %d\n", (int)(input_array[0] * 640));
+//    fprintf(stderr,"Y = %d\n", (int)(input_array[1] * 480));
 
 }
 

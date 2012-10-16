@@ -48,6 +48,9 @@ public:
 
     float *     output_array;
     int         output_array_size;
+    
+    float *     new_mode_array;
+    int         new_mode_array_size;
   
     // internal data storage
 
@@ -55,6 +58,11 @@ public:
     float **    internal_matrix;
 
     // parameter values
+    
+    int         idle_count;
+    int         interest_count;
+    int         give_egg_count;
+    int         limit;
 
 
 };

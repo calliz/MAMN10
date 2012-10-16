@@ -14,7 +14,7 @@
 	</example>
 
 
-	<!--<input name="INPUT" description="Server current position" size="3" />-->
+	<input name="INPUT" description="Server current position" size="3" />
 
 	<output name="STRESS" description="Current stress level" size="1" />
     

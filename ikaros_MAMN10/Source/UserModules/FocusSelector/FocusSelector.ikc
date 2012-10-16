@@ -15,7 +15,7 @@
 
 	<!-- <input name="STRESS" description="Server current position" size="1" /> -->
 
-	<!-- <input name="OBJECT_STATUS" description="Server current position" size="?" /> -->
+	<input name="OBJECT_STATUS" description="Server current position" size="?" />
 
 	<output name="FOCUS" description="Desired server position" size="3" />
     

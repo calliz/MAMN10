@@ -24,18 +24,18 @@
 //
 //	<Additional description of the module>
 
-#ifndef FaceModule_
-#define FaceModule_
+#ifndef ObjectModule_
+#define ObjectModule_
 
 #include "IKAROS.h"
 
-class FaceModule: public Module
+class ObjectModule: public Module
 {
 public:
-    static Module * Create(Parameter * p) { return new FaceModule(p); }
+    static Module * Create(Parameter * p) { return new ObjectModule(p); }
 
-    FaceModule(Parameter * p) : Module(p) {}
-    virtual ~FaceModule();
+    ObjectModule(Parameter * p) : Module(p) {}
+    virtual ~ObjectModule();
 
     void 		Init();
     void 		Tick();
@@ -43,32 +43,22 @@ public:
     // pointers to inputs and outputs
     // and integers to represent their sizes
 
-    float *     input_array;
-    int         input_array_size;
+    float *     input_position_array;
+    int         input_position_array_size;
     
-    float *     input_dist_array;
-    int         input_dist_array_size;
+    float **    input_dist_matrix;
+    int         input_dist_matrix_size_x;
+    int         input_dist_matrix_size_y;
 
-    float **    input_matrix;
-    int         input_matrix_size_x;
-    int         input_matrix_size_y;
+    float *     output_status_array;
+    int         output_status_array_size;
 
-    float *     output_array;
-    int         output_array_size;
-
-    float **    output_matrix;
-    int         output_matrix_size_x;
-    int         output_matrix_size_y;
 
     // internal data storage
 
-    float *     internal_array;
-    float **    internal_matrix;
 
     // parameter values
 
-    float       float_parameter;
-    int         int_parameter;
 };
 
 #endif

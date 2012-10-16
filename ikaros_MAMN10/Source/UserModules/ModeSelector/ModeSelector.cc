@@ -26,6 +26,11 @@
 #include "ModeSelector.h"
 #include "IKAROS_math.h"
 
+#define IDLE_MODE 1
+#define INTEREST_MODE 2
+#define GIVE_EGG_MODE 3
+#define DEFENSE_MODE 4
+
 // use the ikaros namespace to access the math library
 // this is preferred to using math.h
 
@@ -36,11 +41,20 @@ using namespace ikaros;
 void
 ModeSelector::Init()
 {
-//    input_array = GetInputArray("INPUT");
-//    input_array_size = GetInputSize("INPUT");
-//    
+    input_array = GetInputArray("INPUT");
+    input_array_size = GetInputSize("INPUT");
+
     output_array = GetOutputArray("STRESS");
     output_array_size = GetOutputSize("STRESS");
+    
+    new_mode_array = GetOutputArray("STRESS");
+    new_mode_array_size = GetOutputSize("STRESS");
+    
+    idle_count = 0;
+    interest_count = 0;
+    give_egg_count = 0;
+    limit = 10;
+    
     
 }
 
@@ -60,6 +74,73 @@ ModeSelector::~ModeSelector()
 void
 ModeSelector::Tick()
 {
-    output_array[0] = 1;
-}
+    
+//    if (input_array[2] < 100 && input_array[2] > 0) {
+//        output_array[0] = GIVE_EGG_MODE;
+//    }
+//    else if (input_array[2] < 250){
+//        output_array[0] = INTEREST_MODE;
+//    }else{
+//        output_array[0] = IDLE_MODE;
+//    }
+    
+    copy_array( output_array, new_mode_array, output_array_size);
 
+
+    if (input_array[2] < 100 ) { //&& input_array[2] > 0
+        new_mode_array[0] = GIVE_EGG_MODE;
+    }
+    else if (input_array[2] < 250){
+        new_mode_array[0] = INTEREST_MODE;
+    }else{
+        new_mode_array[0] = IDLE_MODE;
+    }
+    
+    if (new_mode_array[0] == IDLE_MODE) {
+        idle_count = idle_count + 1;
+        if (idle_count >= limit) {
+            output_array[0] = IDLE_MODE;
+            idle_count = 0;
+            interest_count = 0;
+            give_egg_count = 0;
+            limit = 10;
+        }
+    }else if(new_mode_array[0] == GIVE_EGG_MODE) {
+        give_egg_count = give_egg_count + 1;
+        if (give_egg_count >= limit) {
+            output_array[0] = GIVE_EGG_MODE;
+            idle_count = 0;
+            interest_count = 0;
+            give_egg_count = 0;
+            limit = 100;
+        }
+    }else if(new_mode_array[0] == INTEREST_MODE) {
+        interest_count = interest_count + 1;
+        if (interest_count >= limit) {
+            output_array[0] = INTEREST_MODE;
+            idle_count = 0;
+            interest_count = 0;
+            give_egg_count = 0;
+            limit = 10;
+        }
+    }else if(new_mode_array[0] == DEFENSE_MODE) {
+        output_array[0] = DEFENSE_MODE;
+        idle_count = 0;
+        interest_count = 0;
+        give_egg_count = 0;
+        limit = 100;
+        
+    }else{
+        output_array[0] = new_mode_array[0];
+    }
+
+    
+    copy_array(new_mode_array, output_array, output_array_size);
+
+    
+    
+    
+//     output_array[0] = IDLE_MODE;
+    
+    
+}

@@ -66,6 +66,9 @@ public:
     bool        initiated_move_b;
     bool        initiated_move_c;
     float       float_parameter;
+    double      idle_timestamp;
+    double      give_egg_timestamp;
+    double      requested_time;
 };
 
 #endif
