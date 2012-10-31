@@ -55,6 +55,9 @@ Movement::Init()
     initiated_move_a = false;
     initiated_move_b = false;
     initiated_move_c = false;
+    defence_move_a = false;
+    defence_move_b = false;
+    defence_move_c = false;
     give_egg_timestamp = 0;
     idle_timestamp = 0;
     requested_time = 0;
@@ -69,11 +72,18 @@ Movement::Init()
     // Do the same for the outputs
     output_array = GetOutputArray("OUTPUT");
     output_array_size = GetOutputSize("OUTPUT");
-    last_position_array = create_array(focus_array_size);
-    //copy_array(last_position_array, output_array, focus_array_size);
-    last_position_array[0]= 150;
-    last_position_array[1]= 130;
-    last_position_array[2]= 140;
+    
+    output_speed_array = GetOutputArray("SPEED");
+    output_speed_array_size = GetOutputSize("SPEED");
+    
+    stress_array[0]= IDLE_MODE;
+    output_array[0] = 150;
+    output_array[1] = 130;
+    output_array[2] = 160;
+    
+    output_speed_array[0]= 0.3;
+    output_speed_array[1]= 0.1;
+    output_speed_array[2]= 0.1;
     
 }
 
@@ -83,7 +93,6 @@ Movement::~Movement()
 {
     // Destroy data structures that you allocated in Init.
     
-    destroy_array(last_position_array);
     //destroy_matrix(internal_matrix);
     
     // Do NOT destroy data structures that you got from the
@@ -104,13 +113,14 @@ Movement::Tick()
     double t1=timestamp.tv_sec;
     double t2 =timestamp.tv_usec;
     t1 = t1 + t2/1000000;
-    copy_array(output_array, last_position_array, focus_array_size);
     
     int mode =  (int)stress_array[0];
     
-    if(focus_array[0] == -1 && !(mode == GIVE_EGG_MODE)){
-        mode = IDLE_MODE;
-    }else if(mode == GIVE_EGG_MODE && !egg_back){
+//    if(focus_array[3] == -1 && mode != GIVE_EGG_MODE){
+//        mode = IDLE_MODE;
+//    }
+    if(mode == GIVE_EGG_MODE && !egg_back){
+        fprintf(stderr, "No egg, back to intrest mode\n");
         mode = INTEREST_MODE;
     }
     
@@ -165,18 +175,16 @@ Movement::Tick()
             if (t1 - idle_timestamp >= requested_time){
                 
                 if (initiated_move_a && egg_back) {
-                    
-                    fprintf(stderr, "initiated_move_a:\n");
-                    
+                                        
                     //The chickens's moves to push her egg towards the visitor
                     if (initiated_move_b && !initiated_move_c) {
-                        requested_time = 1;
-                        output_array[1] = 86;
+                        requested_time = 1.5;
+                        output_array[1] = 87;
                         initiated_move_c = true;
                         idle_timestamp = 0;
                         
                     }else if(initiated_move_c){                        
-                        requested_time = 1;
+                        requested_time = 2;
                         output_array[2] = 140;
                         initiated_move_a = false;
                         initiated_move_b = false;
@@ -185,7 +193,7 @@ Movement::Tick()
                         idle_timestamp = 0;
                         
                     }else{
-                        requested_time = 1;
+                        requested_time = 1.5;
                         output_array[2] = 60;
                         initiated_move_b = true;
                         idle_timestamp = 0;
@@ -206,13 +214,14 @@ Movement::Tick()
             if(idle_timestamp == 0){
                 idle_timestamp = t1;
             }
-            
-            if(!up){
-                requested_time = 1;
-                output_array[1] = 130;
-                up = true;
-            }
+
             if (t1 - idle_timestamp >= requested_time){
+                
+                if(!up){
+                    requested_time = 1;
+                    output_array[1] = 130;
+                    up = true;
+                }
                 
                 // The chicken's moves to follow interesting objects
                 output_array[0] = 200 - 100 * focus_array[0];
@@ -233,36 +242,36 @@ Movement::Tick()
                 
                 if (!egg_back){
                     // The chicken's moves to protect her egg
-                    if (initiated_move_a && !initiated_move_b) {
-                        requested_time = 1;
+                    if (defence_move_a && !defence_move_b) {
+                        requested_time = 1.5;
                         output_array[1] = 65;
-                        initiated_move_b = true;
+                        defence_move_b = true;
                         idle_timestamp = 0;
                         
-                    }else if(initiated_move_b){
-                        requested_time = 1;
+                    }else if(defence_move_b){
+                        requested_time = 1.5;
                         output_array[1] = 70;
                         output_array[2] = 118;
-                        initiated_move_a = false;
-                        initiated_move_b = false;
-                        initiated_move_c = true;
+                        defence_move_a = false;
+                        defence_move_b = false;
+                        defence_move_c = true;
                         egg_back = true;
                         idle_timestamp = 0;
                         
                     }else{
-                        requested_time = 1;
+                        requested_time = 1.5;
                         output_array[0] = 150;
-                        output_array[1] = 140;
+                        output_array[1] = 90; //ändrat från 140  //ev ändra till 65 & skippa nästa steg (kolla ur detta funkar från idle_mode)
                         output_array[2] = 170;
-                        initiated_move_a = true;
+                        defence_move_a = true;
                         idle_timestamp = 0;
                     }
                     
-                }else if(initiated_move_c){
-                    requested_time = 1;
-                    output_array[2] = 280;
+                }else if(defence_move_c){
+                    requested_time = 1.5; // korta ner till 0.8
+                    output_array[2] = 280; // ändra till 150
                     idle_timestamp = 0;
-                    initiated_move_c = false;
+                    defence_move_c = false;
                     
                 }else{
                     // The chicken's moves to follow interesting objects in a crunched position
@@ -276,9 +285,6 @@ Movement::Tick()
         default:
             break;
     }
-    
-    copy_array(last_position_array, output_array, focus_array_size);
-    
 }
 
 

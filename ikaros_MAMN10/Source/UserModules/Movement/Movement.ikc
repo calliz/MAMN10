@@ -13,10 +13,12 @@
 		/>
 	</example>
 
-	<input name="FOCUS" size="3" description="The focus position. X, Y, Z" />
+	<input name="FOCUS" size="4" description="The focus position. X, Y, Z, flag" />
 	<input name="STRESS" size="1" description="Stresslevel" />
 
 	<output name="OUTPUT" description="Serverpositions" size="3" />
+    <output name="SPEED" description="Serverspeed" size="3" />
+
 
 	<module class="Movement" />
 

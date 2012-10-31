@@ -47,9 +47,6 @@ FocusSelector::Init()
     output_focus_array = GetOutputArray("FOCUS");
     output_focus_array_size = GetOutputSize("FOCUS");
     
-    last_focus_array = GetOutputArray("FOCUS");
-    last_focus_array_size = GetOutputSize("FOCUS");
-    
     output_focus_array[0] = -1;
     output_focus_array[1] = -1;
     output_focus_array[2] = -1;
@@ -73,22 +70,25 @@ FocusSelector::~FocusSelector()
 void
 FocusSelector::Tick()
 {
-    copy_array(output_focus_array, last_focus_array, last_focus_array_size);
-    
-    if(input_objects_array[3] > 0){
+    if(input_objects_array[4] > 0){
         output_focus_array[0] = input_objects_array[0];
         output_focus_array[1] = input_objects_array[1];
         output_focus_array[2] = input_objects_array[2];
-    }else{
-        idle_count = idle_count + 1;
-        if (idle_count >= 10) {
-            output_focus_array[0] = -1;
-            output_focus_array[1] = -1;
-            output_focus_array[2] = -1;
-            idle_count = 0;
-        }
+        output_focus_array[3] = 0;
+
     }
     
-    copy_array(last_focus_array, output_focus_array, output_focus_array_size);
+//    else{
+//        idle_count = idle_count + 1;
+//        if (idle_count >= 10) {
+//            output_focus_array[3] = -1;
+//            idle_count = 0;
+//        }
+//    }
+    
+    output_focus_array[0] = input_objects_array[0];
+    output_focus_array[1] = input_objects_array[1];
+    output_focus_array[2] = input_objects_array[2];
+    
 }
 

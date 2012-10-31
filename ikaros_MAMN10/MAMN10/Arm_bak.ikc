@@ -15,7 +15,7 @@
 		index_mode 	 = "indirect"
 		servo_id	 = "1 2 3"
 		angle_unit 	 = "degrees"
-		position_speed   = "0.4"
+		position_speed   = "0.1"
 	/>
     
     <module

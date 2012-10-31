@@ -55,7 +55,7 @@ public:
 
 
     // internal data storage
-
+    int         error_counter;
 
     // parameter values
 

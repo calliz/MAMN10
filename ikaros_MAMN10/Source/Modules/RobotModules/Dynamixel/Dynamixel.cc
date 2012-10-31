@@ -417,6 +417,8 @@ Dynamixel::Tick()
             }
             else // servo mode
             {
+                // läs in speed parametrar och lagra i en position_speed array och ersätt position_speed nedan med position_speed[i]
+                
                 positions[servo_index[i]] = servo[i]->ConvertToPosition(input[i], angle_unit);
                 speeds[servo_index[i]] = int(1+position_speed*float(servo[i]->speed_max-1));      // avoid speed of 0 which would turn off speed control
                 if(torque)

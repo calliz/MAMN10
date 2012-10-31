@@ -47,14 +47,12 @@ ModeSelector::Init()
     output_array = GetOutputArray("STRESS");
     output_array_size = GetOutputSize("STRESS");
     
-    new_mode_array = GetOutputArray("STRESS");
-    new_mode_array_size = GetOutputSize("STRESS");
-    
+    output_array[0] = IDLE_MODE;
     idle_count = 0;
     interest_count = 0;
     give_egg_count = 0;
-    limit = 10;
-    
+    limit = 5;
+    new_mode = IDLE_MODE;
     
 }
 
@@ -74,73 +72,56 @@ ModeSelector::~ModeSelector()
 void
 ModeSelector::Tick()
 {
+    fprintf(stderr, "x=%lf, y=%lf, z_cm=%lf, A=%lf,z_velo=%lf\n", input_array[0],input_array[1],input_array[2],input_array[3],input_array[4]);
     
-//    if (input_array[2] < 100 && input_array[2] > 0) {
-//        output_array[0] = GIVE_EGG_MODE;
-//    }
-//    else if (input_array[2] < 250){
-//        output_array[0] = INTEREST_MODE;
-//    }else{
-//        output_array[0] = IDLE_MODE;
-//    }
-    
-    copy_array( output_array, new_mode_array, output_array_size);
-
-
-    if (input_array[2] < 100 ) { //&& input_array[2] > 0
-        new_mode_array[0] = GIVE_EGG_MODE;
-    }
-    else if (input_array[2] < 250){
-        new_mode_array[0] = INTEREST_MODE;
+    if (input_array[2] < 130 && output_array[0] < DEFENSE_MODE && input_array[3]<=10){
+        new_mode = GIVE_EGG_MODE;
+    }else if (input_array[2] < 350 && input_array[3] > 10){
+        new_mode = INTEREST_MODE;
     }else{
-        new_mode_array[0] = IDLE_MODE;
+        new_mode = IDLE_MODE;
     }
     
-    if (new_mode_array[0] == IDLE_MODE) {
+    if(input_array[4] < - 60){
+        new_mode = DEFENSE_MODE;
+    }
+    
+    if (new_mode == IDLE_MODE) {
         idle_count = idle_count + 1;
         if (idle_count >= limit) {
+            fprintf(stderr,"Bytt till IDLE_MODE\n");
             output_array[0] = IDLE_MODE;
             idle_count = 0;
             interest_count = 0;
             give_egg_count = 0;
-            limit = 10;
+            limit = 5;
         }
-    }else if(new_mode_array[0] == GIVE_EGG_MODE) {
+    }else if(new_mode == GIVE_EGG_MODE) {
         give_egg_count = give_egg_count + 1;
         if (give_egg_count >= limit) {
+            fprintf(stderr,"Bytt till GIVE_EGG_MODE\n");
             output_array[0] = GIVE_EGG_MODE;
             idle_count = 0;
             interest_count = 0;
             give_egg_count = 0;
-            limit = 100;
+            limit = 20;
         }
-    }else if(new_mode_array[0] == INTEREST_MODE) {
+    }else if(new_mode == INTEREST_MODE) {
         interest_count = interest_count + 1;
         if (interest_count >= limit) {
+            fprintf(stderr," Bytt till INTEREST_MODE\n");
             output_array[0] = INTEREST_MODE;
             idle_count = 0;
             interest_count = 0;
             give_egg_count = 0;
-            limit = 10;
+            limit = 20;
         }
-    }else if(new_mode_array[0] == DEFENSE_MODE) {
+    }else if(new_mode == DEFENSE_MODE) {
+        fprintf(stderr,"Bytt till DEFENSE_MODE\n");
         output_array[0] = DEFENSE_MODE;
         idle_count = 0;
         interest_count = 0;
         give_egg_count = 0;
-        limit = 100;
-        
-    }else{
-        output_array[0] = new_mode_array[0];
+        limit = 70;
     }
-
-    
-    copy_array(new_mode_array, output_array, output_array_size);
-
-    
-    
-    
-//     output_array[0] = IDLE_MODE;
-    
-    
 }

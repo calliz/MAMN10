@@ -48,9 +48,6 @@ public:
 
     float *     output_array;
     int         output_array_size;
-    
-    float *     new_mode_array;
-    int         new_mode_array_size;
   
     // internal data storage
 
@@ -63,6 +60,7 @@ public:
     int         interest_count;
     int         give_egg_count;
     int         limit;
+    int         new_mode;
 
 
 };

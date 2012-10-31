@@ -51,10 +51,12 @@ public:
     
     float *     output_array;
     int         output_array_size;
+    
+    float *     output_speed_array;
+    int         output_speed_array_size;
 
     // internal data storage
 
-    float *     last_position_array;
     float **    internal_matrix;
 
     // parameter values
@@ -65,6 +67,9 @@ public:
     bool        initiated_move_a;
     bool        initiated_move_b;
     bool        initiated_move_c;
+    bool        defence_move_a;
+    bool        defence_move_b;
+    bool        defence_move_c;
     float       float_parameter;
     double      idle_timestamp;
     double      give_egg_timestamp;

@@ -51,9 +51,6 @@ public:
 
     float *     output_focus_array;
     int         output_focus_array_size;
-    
-    float *     last_focus_array;
-    int         last_focus_array_size;
 
     // internal data storage
 
