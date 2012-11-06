@@ -5,7 +5,8 @@
 	This example has been tested with iSight
 -->
 
-<group>
+<group title="Face Detector">
+
 		<module
 			class   = "InputVideoQT"
 			name	= "CAMERA"			
@@ -26,7 +27,7 @@
 				class   ="Image"
                 title   = "Camera"
 				type	= "rgb"
-				module  = "CAMERA+CAMERA+CAMERA"
+				module  = "CAMERA"
 				source  = "RED+GREEN+BLUE"
 				x="0" y="0"
 				w="3" h="2"

@@ -49,13 +49,6 @@
 #include "IKAROS.h"
 #include "WebUI/WebUI.h"
 
-//
-// Modules
-//
-
-#include "Modules/Modules.h"
-#include "UserModules/UserModules.h"
-
 
 void PrintInfo();
 
@@ -65,18 +58,18 @@ PrintInfo()
     printf("\n");
     printf("The file to use should be given at the command line:\n");
     printf("\n");
-    printf("    IKAROS file.ikc\n");
+    printf("    ikaros file.ikc\n");
     printf("\n");
     printf("Use the w-option to also start the WebUI:\n");
     printf("\n");
-    printf("    IKAROS -w file.ikc\n");
+    printf("    ikaros -w file.ikc\n");
     printf("\n");
     printf("This examaple will wait for a request from the Web browser at\n");
     printf("the default port (8000).\n");
     printf("\n");
     printf("Usage:\n");
     printf("\n");
-    printf("\tIKAROS [-w#][-W#][-p][-t][-T][-b#][-r#][-v][-q][-x][-X][-m][-l][-i][-a][file]\n\n");
+    printf("\tikaros [-w#][-W#][-p][-t][-T][-b#][-r#][-v][-q][-x][-X][-m][-l][-i][-a][file]\n\n");
     printf("\t-w#   WebUI\n");
     printf("\t-W#   WebUI: debug mode, list requests\n");
     printf("\t-p    profile\n");
@@ -204,9 +197,6 @@ run_batch(Options * options)
 
             k.ListInfo();
 
-            InitModules(k);
-            InitUserModules(k);
-
             k.Init();
             k.ListClasses();
             k.ListModulesAndConnections();
@@ -251,14 +241,14 @@ main(int argc, char *argv[])
     
     // Create and Init kernel
 
-    Kernel	k(options);
+//    Kernel	k(options);
 
+    Kernel & k = kernel();    // Get global kernel
+    k.SetOptions(options);
+    
     try
     {
         k.ListInfo();
-
-        InitModules(k);
-        InitUserModules(k);
 
         k.Init();
 
@@ -328,6 +318,7 @@ main(int argc, char *argv[])
         return -1;	// UNDEFINED ERROR
     }
 
+    delete &k;
     return 0;
 }
 

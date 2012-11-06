@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<group name="Movement" description="Handles the robot moves">
+
+	<description type="text">
+		...
+	</description>
+
+	<example description="A simple example">
+		<module
+			class="Movement"
+			name="Movement"
+		/>
+	</example>
+
+	<input name="FOCUS" size="4" description="The focus position. X, Y, Z, flag" />
+	<input name="STRESS" size="1" description="Stresslevel" />
+
+	<output name="OUTPUT" description="Serverpositions" size="3" />
+    <output name="SPEED" description="Serverspeed" size="3" />
+
+
+	<module class="Movement" />
+
+	<author>
+		<name>Olle Klang</name>
+		<email></email>
+		<affiliation></affiliation>
+		<homepage></homepage>
+	</author>
+
+   <files>
+   		<file>Movement.h</file>
+   		<file>Movement.cc</file>
+   		<file>Movement.ikc</file>
+   </files>
+
+</group>
+

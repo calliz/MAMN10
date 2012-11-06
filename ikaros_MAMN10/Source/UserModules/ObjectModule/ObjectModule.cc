@@ -162,4 +162,7 @@ ObjectModule::Tick()
     }
 }
 
+// Install the module. This code is executed during start-up.
+
+static InitClass init("ObjectModule", &ObjectModule::Create, "Source/UserModules/ObjectModule/");
 

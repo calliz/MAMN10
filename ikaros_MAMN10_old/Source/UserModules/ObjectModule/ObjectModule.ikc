@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<group name="ObjectModule" description="keeping track and calculating movement of objects">
+
+	<description type="text">
+		Module that can be used as a start for a new module.
+		Simply change all occurrences of "MyModule" to the name of your new module in
+		MyModule.cc, MyModule.h and MyModule.ikc (this file), rename the files, and fill
+		in the new code and documentation. This module is located in the
+		UserModules directory.
+	</description>
+
+	<example description="A simple example">
+		<module
+			class="ObjectModule"
+			name="ObjectModule"
+			parameter1 = "3.14"
+			parameter2 = "42"
+		/>
+	</example>
+
+
+
+	<input name="FACE_POSITION" size="2" description="The face position relative to the kinect. X, Y, Z" />
+    <input name="FACE_DISTANCE" description="The depth input" size_x ="640" size_y="480"/>
+
+	<!--<output name="OBJECT_POSITION" description="The x,y,z position of the object in cm" size="3" />-->
+	<output name="OBJECT_STATUS" description="The position in x,y,z, the velocity in x,y,z in cm/µs and the activity level of the object" size="5" />
+
+	<module class="ObjectModule" />
+
+	<author>
+		<name>Johan Hallberg</name>
+	</author>
+
+   <files>
+   		<file>ObjectModule.h</file>
+   		<file>ObjectModule.cc</file>
+   		<file>ObjectModule.ikc</file>
+   </files>
+
+</group>
+

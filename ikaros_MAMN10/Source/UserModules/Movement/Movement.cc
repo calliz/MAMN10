@@ -77,9 +77,9 @@ Movement::Init()
     output_speed_array_size = GetOutputSize("SPEED");
     
     stress_array[0]= IDLE_MODE;
-    output_array[0] = 150;
-    output_array[1] = 130;
-    output_array[2] = 160;
+    output_array[0] = 180;
+    output_array[1] = 160;
+    output_array[2] = 190;
     
     output_speed_array[0]= 0.3;
     output_speed_array[1]= 0.1;
@@ -138,8 +138,8 @@ Movement::Tick()
                 if (up) {
                     if (rotated) {
                         requested_time = 1;
-                        output_array[1] = 70;
-                        output_array[2] = 120;
+                        output_array[1] = 100;
+                        output_array[2] = 150;
                         up = false;
                         idle_timestamp = 0;
                         
@@ -157,8 +157,8 @@ Movement::Tick()
                     }
                 }else{
                     requested_time = 1;
-                    output_array[1] = 130;
-                    output_array[2] = 140;
+                    output_array[1] = 160;
+                    output_array[2] = 170;
                     up = true;
                     rotated = false;
                     idle_timestamp = 0;
@@ -179,13 +179,13 @@ Movement::Tick()
                     //The chickens's moves to push her egg towards the visitor
                     if (initiated_move_b && !initiated_move_c) {
                         requested_time = 1.5;
-                        output_array[1] = 87;
+                        output_array[1] = 117;
                         initiated_move_c = true;
                         idle_timestamp = 0;
                         
                     }else if(initiated_move_c){                        
                         requested_time = 2;
-                        output_array[2] = 140;
+                        output_array[2] = 170;
                         initiated_move_a = false;
                         initiated_move_b = false;
                         initiated_move_c = false;
@@ -194,15 +194,15 @@ Movement::Tick()
                         
                     }else{
                         requested_time = 1.5;
-                        output_array[2] = 60;
+                        output_array[2] = 90;
                         initiated_move_b = true;
                         idle_timestamp = 0;
                     }
                     
                 }else{
-                    output_array[0] = 150;
-                    output_array[1] = 130;
-                    output_array[2] = 160;
+                    output_array[0] = 180;
+                    output_array[1] = 160;
+                    output_array[2] = 190;
                     initiated_move_a = true;
                 }
             }
@@ -219,14 +219,14 @@ Movement::Tick()
                 
                 if(!up){
                     requested_time = 1;
-                    output_array[1] = 130;
+                    output_array[1] = 160;
                     up = true;
                 }
                 
                 // The chicken's moves to follow interesting objects
-                output_array[0] = 200 - 100 * focus_array[0];
-                output_array[1] = 130;
-                output_array[2] = 230 - 80 * focus_array[1];
+                output_array[0] = 230 - 100 * focus_array[0];
+                output_array[1] = 160;
+                output_array[2] = 260 - 80 * focus_array[1];
                 up = true;
             }
             break;
@@ -244,14 +244,14 @@ Movement::Tick()
                     // The chicken's moves to protect her egg
                     if (defence_move_a && !defence_move_b) {
                         requested_time = 1.5;
-                        output_array[1] = 65;
+                        output_array[1] = 95;
                         defence_move_b = true;
                         idle_timestamp = 0;
                         
                     }else if(defence_move_b){
                         requested_time = 1.5;
-                        output_array[1] = 70;
-                        output_array[2] = 118;
+                        output_array[1] = 100;
+                        output_array[2] = 148;
                         defence_move_a = false;
                         defence_move_b = false;
                         defence_move_c = true;
@@ -260,24 +260,24 @@ Movement::Tick()
                         
                     }else{
                         requested_time = 1.5;
-                        output_array[0] = 150;
-                        output_array[1] = 90; //ändrat från 140  //ev ändra till 65 & skippa nästa steg (kolla ur detta funkar från idle_mode)
-                        output_array[2] = 170;
+                        output_array[0] = 180;
+                        output_array[1] = 120; //ändrat från 140  //ev ändra till 65 & skippa nästa steg (kolla ur detta funkar från idle_mode)
+                        output_array[2] = 200;
                         defence_move_a = true;
                         idle_timestamp = 0;
                     }
                     
                 }else if(defence_move_c){
-                    requested_time = 1.5; // korta ner till 0.8
-                    output_array[2] = 280; // ändra till 150
+                    requested_time = 0.8;
+                    output_array[2] = 180; 
                     idle_timestamp = 0;
                     defence_move_c = false;
                     
                 }else{
                     // The chicken's moves to follow interesting objects in a crunched position
-                    output_array[0] = 200 - 100 * focus_array[0];
-                    output_array[1] = 60;
-                    output_array[2] = 280 - 10 * focus_array[1];
+                    output_array[0] = 230 - 100 * focus_array[0];
+                    output_array[1] = 90;
+                    output_array[2] = 300 - 10 * focus_array[1];
                     up = true;
                 }
             }
@@ -287,4 +287,7 @@ Movement::Tick()
     }
 }
 
+// Install the module. This code is executed during start-up.
+
+static InitClass init("Movement", &Movement::Create, "Source/UserModules/Movement/");
 

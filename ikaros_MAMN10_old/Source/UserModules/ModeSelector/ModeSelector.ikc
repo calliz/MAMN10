@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<group name="ModeSelector" description="Module for selecting one of three modes ">
+
+	<description type="text">
+		...
+	</description>
+
+	<example description="A simple example">
+		<module
+			class="ModeSelector"
+			name="ModeSelector"
+		/>
+	</example>
+
+
+	<input name="INPUT" description="Objects current position" size="5" />
+
+	<output name="STRESS" description="Current stress level" size="1" />
+    
+	<module class="ModeSelector" />
+
+	<author>
+		<name>Olle Klang</name>
+		<email></email>
+		<affiliation></affiliation>
+		<homepage></homepage>
+	</author>
+
+   <files>
+   		<file>ModeSelector.h</file>
+   		<file>ModeSelector.cc</file>
+   		<file>ModeSelector.ikc</file>
+   </files>
+
+</group>
+

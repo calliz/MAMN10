@@ -195,3 +195,6 @@ InputQTMovie::Tick()
 }
 
 #endif
+
+static InitClass init("InputQTMovie", &InputQTMovie::Create, "Source/Modules/IOModules/FileInput/InputQTMovie/");
+

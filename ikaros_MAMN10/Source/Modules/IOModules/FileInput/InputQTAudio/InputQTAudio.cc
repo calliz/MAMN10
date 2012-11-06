@@ -417,3 +417,6 @@ InputQTAudio::Tick()
 }
 
 #endif
+
+static InitClass init("InputQTAudio", &InputQTAudio::Create, "Source/Modules/IOModules/FileInput/InputQTAudio/");
+

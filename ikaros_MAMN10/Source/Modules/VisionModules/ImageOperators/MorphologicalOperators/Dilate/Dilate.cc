@@ -93,5 +93,6 @@ Dilate::Tick()
         }
 }
 
+static InitClass init("Dilate", &Dilate::Create, "Source/Modules/VisionModules/ImageOperators/MorphologicalOperators/Dilate/");
 
 

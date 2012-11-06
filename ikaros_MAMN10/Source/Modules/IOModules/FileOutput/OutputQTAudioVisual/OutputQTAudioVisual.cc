@@ -796,3 +796,4 @@ void OutputQTAudioVisual::CloseMovie()
 }
 #endif
 
+static InitClass init("OutputQTAudioVisual", &OutputQTAudioVisual::Create, "Source/Modules/IOModules/FileOutput/OutputQTAudioVisual/");

@@ -1,7 +1,7 @@
 //
 //	IKAROS_System.h		Definition of the target system for which to compile
 //
-//    Copyright (C) 2001-2010  Christian Balkenius
+//    Copyright (C) 2001-2012  Christian Balkenius
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -71,8 +71,6 @@
 //#define USE_THREADS
 //#define USE_BLAS
 //#define USE_MPI
-//#define USE_ARTOOLKITPLUS
-//#define USE_OPENKINECT
 #endif
 
 
@@ -93,8 +91,6 @@
 #define USE_BLAS
 #define USE_LIBPNG
 //#define USE_MPI
-#define USE_ARTOOLKITPLUS
-#define USE_OPENKINECT
 //#define USE_THREADED_WEBUI
 #endif
 
@@ -119,8 +115,6 @@
 #define USE_LAPACK
 #define USE_THREADS
 #define USE_MPI
-#define USE_ARTOOLKITPLUS
-#define USE_OPENKINECT
 //#define USE_THREADED_WEBUI    // 1.3
 #endif
 
@@ -139,8 +133,6 @@
 //#define USE_LIBPNG
 //#define USE_BLAS
 #define USE_WIN_SERIAL
-#define USE_ARTOOLKITPLUS
-#define USE_OPENKINECT
 //#define USE_THREADED_WEBUI
 #include <direct.h> // Include chdir
 #define chdir _chdir

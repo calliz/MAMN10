@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<group name="MyModule" description="minimal example module">
+
+	<description type="text">
+		Module that can be used as a start for a new module.
+		Simply change all occurrences of "MyModule" to the name of your new module in
+		MyModule.cc, MyModule.h and MyModule.ikc (this file), rename the files, and fill
+		in the new code and documentation. This module is located in the
+		UserModules directory.
+	</description>
+
+	<example description="A simple example">
+		<module
+			class="MyModule"
+			name="MyModule"
+			parameter1 = "3.14"
+			parameter2 = "42"
+		/>
+	</example>
+
+
+	<input name="INPUT" description="The first input" />
+    <input name="INPUT_POS" description="The second input" size_x = "20" size_param_y= "10"/>
+    <input name="INPUT_DEPTH" description="The depth input" size_x ="640" size_y="480"/>
+    <input name="FACE_POSITION" size="2" description="The first input" />
+
+
+	<output name="OUTPUT" description="The first output" size="3" />
+    <output name="FACE_DISTANCE" description="Distance to face in cm" size="1" />
+
+    <!--output name="OUTPUT2" description="The first output" size_x="20" size_param_y="10" /-->
+    
+	<module class="MyModule" />
+
+	<author>
+		<name>Christian Balkenius</name>
+		<email>christian.balkenius@lucs.lu.se</email>
+		<affiliation>Lund University Cognitive Science</affiliation>
+		<homepage>http://www.lucs.lu.se/Christian.Balkenius</homepage>
+	</author>
+
+   <files>
+   		<file>MyModule.h</file>
+   		<file>MyModule.cc</file>
+   		<file>MyModule.ikc</file>
+   </files>
+
+</group>
+

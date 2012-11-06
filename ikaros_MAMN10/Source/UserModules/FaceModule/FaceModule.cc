@@ -150,6 +150,11 @@ FaceModule::Tick()
     px/cm i HÖJDLED vid den aktuella distansen d är: (480 * 80)/(d * 63)
      */
     
+   
+    
 }
 
+// Install the module. This code is executed during start-up.
+
+static InitClass init("FaceModule", &FaceModule::Create, "Source/UserModules/FaceModule/");
 

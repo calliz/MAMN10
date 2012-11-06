@@ -24,7 +24,7 @@
 //
 
 #include "ModeSelector.h"
-#include "IKAROS_math.h"
+#include "../Kernel/IKAROS_Math.h"
 
 #define IDLE_MODE 1
 #define INTEREST_MODE 2
@@ -125,3 +125,8 @@ ModeSelector::Tick()
         limit = 70;
     }
 }
+
+// Install the module. This code is executed during start-up.
+
+static InitClass init("ModeSelector", &ModeSelector::Create, "Source/UserModules/ModeSelector/");
+

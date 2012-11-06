@@ -186,3 +186,6 @@ MPIFaceDetector::Tick()
 }
 
 
+
+static InitClass init("MPIFaceDetector", &MPIFaceDetector::Create, "Source/Modules/VisionModules/MPIFaceDetector/");
+

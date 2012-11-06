@@ -27,58 +27,82 @@
         <p>
             If the TORQUE input is connected, the torque for each servo can be set individually between min (0) and max (1).
         </p>
+        <p>
+        	FTDI Driver optimisations.
+        </p>
+        <p>
+        	The module communicate can comunicate with many servos and the time for the module to finnish depends on how many servos connected.<br/>
+        	Exemple: <br/>
+        	1 MX-106 with baudrate 3 Mbps 300 ticks/s<br/>
+        	2 MX-106 with baudrate 3 Mbps 170 ticks/s<br/>
+        	3 MX-106 with baudrate 3 Mbps 120 ticks/s<br/>
+        	12 MX-106 with baudrate 3 Mbps XX tick/s<br/>
+        <br/>
+        	1 AX-12 with baudrate 1 Mpbs XX ticks/s<br/>
+        	2 AX-12 with baudrate 1 Mpbs XX ticks/s<br/>
+        	3 AX-12 with baudrate 1 Mpbs XX ticks/s<br/>
+        	12 AX-12 with baudrate 1 Mpbs XX ticks/s<br/>
+        	<br/>
+        	<p>
+        	With many servos connected the module may need to split the data received from the servo's multiple requests which will lead to fewer ticks/s.
+        	</p>
+        </p>
 	</description>
 
 	<example description="A simple example">
 		<module
 			class="Dynamixel"
 			name="Dynamixel"
-           speed="0.2"
 		/>
 	</example>
 
 
     <parameter name="device" type="string" default="/dev/cu.usbserial-A7005Lxn" description="Path to serial device" />
-	
-	<parameter name="servo_id" type="string" default="" description="The IDs of the Dynamixel servos. If this parameter is not set, the module will scan for servos" />
-    
-	<parameter name="index_mode" type="list" values="direct/indirect" default="direct" description="The relation between the indices of the input and output arrays and the IDs of the servos. In direct mode, the index of the arrays correponds to the IDs of the servos while in indirect mode the inputs and outputs has the same size as the number of servos." />
-    
-    <parameter name="angle_unit" type="list" values="degrees/radians/tau/range" default="degrees" description="What units should be used for position inputs and outputs? 0-360 (degrees), 0-2π (radians), or 0-1, where 1 either corresponds to 360° (tau) or the maximum angle for servo (range)" />
-    
-	<parameter name="max_servo_id" type="int" default="32" description="The maximum servo ID to scan for. This parameter must be increased if servos with higher IDs are used. The value can be decreased to speed up the start-up of the module." />
-    
-	<parameter name="size" type="int" default="0" description="This parameter forces a specific size of the output. In the normal case when it is not set, the size will be derived from the list of servo_ids" />
-    
-	<parameter name="feedback" type="bool" default="yes" description="Should the module ask the servos for data? If set to 'no' the module works faster and never receives any data from the servo. Instead, the OUTPUT is set to a copy of the last INPUT." />
+    <parameter name="baud_rate" type="int" default="1000000" description="Serial baud rate" />
+	<parameter name="printf_info" type="list" values="none/minimal/full" default="minimal" description="Print information about the servos to console. Minimal prints a few important features of the servo. Full prints the whole control table." />
 
-	<parameter name="position_speed" type="float" default="0.1" description="Overall speed in fraction of maximum speed. Not used in real time mode." />
+	<parameter name="servo_id" type="string" default="" description="The IDs of the Dynamixel servos. If this parameter is not set, the module will scan for servos" />
+	<parameter name="index_mode" type="list" values="direct/indirect" default="direct" description="The relation between the indices of the input and output arrays and the IDs of the servos. In direct mode, the index of the arrays correponds to the IDs of the servos while in indirect mode the inputs and outputs has the same size as the number of servos." />
+    <parameter name="angle_unit" type="list" values="degrees/radians/tau" default="degrees" description="What units should be used for position inputs and outputs? 0-360 (degrees), 0-2π (radians), or 0-1, where 1 either corresponds to 360° (tau)." />
+	<parameter name="max_servo_id" type="int" default="32" description="The maximum servo ID to scan for. This parameter must be increased if servos with higher IDs are used. The value can be decreased to speed up the start-up of the module." />
+	<parameter name="size" type="int" default="0" description="This parameter forces a specific size of the output. In the normal case when it is not set, the size will be derived from the list of servo_ids" />
+	<parameter name="feedback" type="bool" default="yes" description="Should the module ask the servos for data? If set to 'no' the module works faster and never receives any data from the servo. Instead, the OUTPUT is set to a copy of the last INPUT." />
 
 	<parameter name="start_up_delay" type="int" default="1" description="Number of ticks to wait before a position command is sent to the servos." />
 
-    <input name="INPUT" description="The desired servo positions (in units set by angle_unit)" />
-    <input name="TORQUE" description="The torque for each servo (0-1). A torque of 1 is used if this input is not connected." />
-    <input name="SPEED" description="The speed for each servo (0-1) that is run in continuous mode. This input is ignored for servos in position mode." />
+    <input name="TORQUE_ENABLE" description="Torque Enable On/Off, ON if not connected" />
+    <input name="LED" description="LED On/Off, Off if not connected" />
+	<input name="D_GAIN" description="D value for PID regulation. Current set value if not connected" />
+    <input name="I_GAIN" description="I value for PID regulation. Current set value if not connected" />
+    <input name="P_GAIN" description="P value for PID regulation. Current set value if not connected" />
+    <input name="GOAL_POSITION" description="The desired servo positions (in units set by angle_unit). Current set value if not connected" />
+    <input name="MOVING_SPEED" description="The moving servo positions (0..1). Current set value if not connected" />
+    <input name="TORQUE_LIMIT" description="The torque limit (0..1). Current set value if not connected" />
 
-	<output name="OUTPUT" description="The current servo positions (in units set by angle_units)" />
-
-	<output name="LOAD" description="The current load of the servo (in percent)" />
-	<output name="VOLTAGE" description="The current voltage (in Volts)" />
-	<output name="TEMPERATURE" description="The current temperature (in degrees Celsius, °C)" />
+    
+    <output name="FEEDBACK_TORQUE_ENABLE" description="Torque Enable" />
+    <output name="FEEDBACK_LED" description="LED" />
+	<output name="FEEDBACK_D_GAIN" description="D value for PID regulation" />
+    <output name="FEEDBACK_I_GAIN" description="I value for PID regulation." />
+    <output name="FEEDBACK_P_GAIN" description="P value for PID regulation." />
+    <output name="FEEDBACK_GOAL_POSITION" description="The desired servo positions set" />
+    <output name="FEEDBACK_MOVING_SPEED" description="The moving servo positions set" />
+    <output name="FEEDBACK_TORQUE_LIMIT" description="The torque limit set" />
+    
+	<output name="FEEDBACK_PRESENT_POSITION" description="The current servo positions (in units set by angle_units)" />
+	<output name="FEEDBACK_PRESENT_SPEED" description="The current servo speed (in units set by angle_units)" />
+	<output name="FEEDBACK_PRESENT_LOAD" description="The current load of the servo (in percent)" />
+	<output name="FEEDBACK_PRESENT_VOLTAGE" description="The current voltage (in Volts)" />
+	<output name="FEEDBACK_PRESENT_TEMPERATURE" description="The current temperature (in degrees Celsius, °C)" />
+	<output name="FEEDBACK_PRESENT_CURRENT" description="The current Current (in mA))" />
 
 	<module class="Dynamixel" />
 
     <limitation>
-        The module should ping the servos to see how many there are and set the output accordingly to 
-        allow automatic reconfiguration of the controller.
-    </limitation>
-    
-    <limitation>
-        The module should read additional data such as temperature and force from the servos.
     </limitation>
     
 	<author>
-		<name>Christian Balkenius</name>
+		<name>Christian Balkenius and Birger Johansson</name>
 		<email>christian.balkenius@lucs.lu.se</email>
 		<affiliation>Lund University Cognitive Science</affiliation>
 		<homepage>http://www.lucs.lu.se/Christian.Balkenius</homepage>

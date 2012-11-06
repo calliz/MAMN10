@@ -221,4 +221,6 @@ InputVideoQT::Tick()
 }
 
 
+static InitClass init("InputVideoQT", &InputVideoQT::Create, "Source/Modules/IOModules/Video/InputVideoQT/");
+
 #endif

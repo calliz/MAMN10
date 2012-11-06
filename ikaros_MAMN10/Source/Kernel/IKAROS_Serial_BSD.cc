@@ -37,6 +37,84 @@
 #endif
 
 
+unsigned long baud_constants[][2] =
+{
+    75, B75,
+    110, B110,
+    134, B134,
+    150, B150,
+    200, B200,
+    300, B300,
+    600, B600,
+    1200, B1200,
+    1800, B1800,
+    2400, B2400,
+    4800, B4800,
+    9600, B9600,
+    19200, B19200,
+#ifdef B38400
+    38400, B38400,
+#endif
+#ifdef B57600
+    57600, B57600,
+#endif
+#ifdef B115200
+    115200, B115200,
+#endif
+#ifdef B230400
+    230400, B230400,
+#endif
+#ifdef B460800
+    460800, B460800,
+#endif
+#ifdef B500000
+    500000, B500000,
+#endif
+#ifdef B576000
+    576000, B576000,
+#endif
+#ifdef B921600
+    921600, B921600,
+#endif
+#ifdef B1000000
+    1000000, B1000000,
+#endif
+#ifdef B1152000
+    1152000, B1152000,
+#endif
+#ifdef B1500000
+    1500000, B1500000,
+#endif
+#ifdef B2000000
+    2000000, B2000000,
+#endif
+#ifdef B2500000
+    2500000, B2500000,
+#endif
+#ifdef B3000000
+    3000000, B3000000,
+#endif
+#ifdef B3500000
+    3500000, B3500000,
+#endif
+#ifdef B4000000
+    4000000, B4000000,
+#endif
+    0, 0
+};
+
+
+
+static unsigned long
+baud_rate_constant(unsigned long baud_rate)
+{
+    for(int i=0; baud_constants[i][0] != 0; i++)
+        if(baud_rate == baud_constants[i][0])
+            return baud_constants[i][1];
+    return 0;
+}
+
+
 
 //
 //	SerialData (for Unix this is simply the file descriptor)
@@ -46,7 +124,7 @@ class SerialData
 {
 public:
     int		fd;
-
+    
     SerialData() : fd(-1)
     {};
 };
@@ -56,29 +134,25 @@ public:
 Serial::Serial(const char * device_name, unsigned long baud_rate)
 {
     struct termios options;
-
+    
     max_failed_reads = DEFAULT_MAX_FAILED_READS;
-
+    
     data = new SerialData();
 
     data->fd = open(device_name, O_RDWR | O_NOCTTY | O_NDELAY);
     if(data->fd == -1)
         throw SerialException("Could not open serial device.   ", errno);
-
+    
     fcntl(data->fd, F_SETFL, 0); // blocking
     tcgetattr(data->fd, &options); // get the current options // TODO: restore on destruction of the object
 
 #ifndef MAC_OS_X
-
-    if(cfsetispeed(&options, B1000000))
+    if(!(baud_rate = baud_rate_constant(baud_rate)))
+		throw SerialException("Could not find baud rate constant for suppied baud rate.", errno);
+    if(cfsetispeed(&options, baud_rate))
 		throw SerialException("Could not set baud rate for input", errno);
-    if(cfsetospeed(&options, B1000000))
+    if(cfsetospeed(&options, baud_rate))
 		throw SerialException("Could not set baud rate for output", errno);
-
-//    if(cfsetispeed(&options, baud_rate))
-//		throw SerialException("Could not set baud rate for input", errno);
-//    if(cfsetospeed(&options, baud_rate))
-//		throw SerialException("Could not set baud rate for output", errno);
 #endif
 
     options.c_cflag |= (CS8 | CLOCAL | CREAD);
@@ -87,7 +161,7 @@ Serial::Serial(const char * device_name, unsigned long baud_rate)
     options.c_lflag = 0;
     options.c_cc[VMIN]  = 0;
     options.c_cc[VTIME] = 1;    // tenth of seconds allowed between bytes of serial data
-                                // but since VMIN = 0 we will wait at most 1/10 s for data then return
+                                // but since VMIN = 0 we will wait at most 1/10 s for data and then return
     tcflush(data->fd, TCIOFLUSH);
     tcsetattr(data->fd, TCSANOW, &options);   // set the options
 
@@ -195,10 +269,10 @@ Serial::SendBytes(const char *sendbuf, int length)
         return 0;
 
     long n = write(data->fd, sendbuf, length);
-
+    
     if(n == -1)
         printf("Could not send bytes (%d)", errno);
-
+    
     return int(n);
 }
 

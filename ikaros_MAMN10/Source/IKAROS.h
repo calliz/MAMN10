@@ -1,8 +1,8 @@
 //
 //  IKAROS.h        Kernel code for the IKAROS project
-//					Version 1.3
+//					Version 1.4
 //
-//    Copyright (C) 2001-2011  Christian Balkenius
+//    Copyright (C) 2001-2012  Christian Balkenius
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 #define IKAROS
 
 
-#define VERSION "1.3"
+#define VERSION "1.4"
 
 #include "IKAROS_System.h"
 #include "Kernel/IKAROS_Timer.h"
@@ -147,11 +147,12 @@ private:
 public:
     const char *      name;
     const char *      path;
-    ModuleClass *           next;
+    ModuleClass *     next;
     
     ModuleClass(const char * n, ModuleCreator mc, const char * p, ModuleClass * nxt = NULL);
     ~ModuleClass();
     
+    void            SetClassPath(const char * class_name);
     const char *	GetClassPath(const char * class_name);
     friend Module *	CreateModule(ModuleClass * c, const char * class_name, const char * n, Parameter * p);	// Return a module of class class_name initialized with parameters in p and attributes in a
 };
@@ -371,9 +372,11 @@ public:
     
     Options *       options;
     
+    Kernel();
     Kernel(Options * opt);
     ~Kernel();
     
+    void        SetOptions(Options * opt);
     void        AddClass(const char * name, ModuleCreator mcc, const char * path = NULL);    // Add a new class of modules to the kernel
     
     void        Notify(int msg, const char * format, ...);
@@ -421,7 +424,7 @@ public:
     void        PrintTiming();           // Print total timing information
     
 private:
-    ModuleClass        *     classes;          // List of module classes
+    ModuleClass        *     classes;    // List of module classes
     long               tick;             // Updated every iteration
     long               max_ticks;        // Max iterations, stop after these many ticks
     
@@ -482,6 +485,21 @@ private:
     friend class WebUI;
 };
 
+
+// Global reference to static kernel instance
+
+Kernel & kernel();
+
+// Initialization class
+
+class InitClass
+{
+public:
+    InitClass(const char * name, ModuleCreator mcc, const char * path = NULL)
+    {
+        kernel().AddClass(name, mcc, path);
+    }
+};
 
 
 #endif

@@ -24,7 +24,7 @@
 //
 
 #include "FocusSelector.h"
-#include "IKAROS_math.h"
+#include "../Kernel/IKAROS_Math.h"
 
 
 
@@ -90,5 +90,12 @@ FocusSelector::Tick()
     output_focus_array[1] = input_objects_array[1];
     output_focus_array[2] = input_objects_array[2];
     
+    
+    
 }
+
+// Install the module. This code is executed during start-up.
+
+static InitClass init("FocusSelector", &FocusSelector::Create, "Source/UserModules/FocusSelector/");
+
 

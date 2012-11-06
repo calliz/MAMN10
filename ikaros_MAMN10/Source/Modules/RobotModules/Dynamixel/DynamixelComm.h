@@ -23,6 +23,7 @@
 //    Created: April 4, 2010
 //
 
+
 #ifndef DYNAMIXELCOMM
 #define DYNAMIXELCOMM
 
@@ -91,34 +92,34 @@
 #define INST_RESET              6
 #define INST_SYNC_WRITE         131
 
-
-
 class DynamixelComm : public Serial
 {
 public:
-
+    
     DynamixelComm(const char * device_name, unsigned long baud_rate);
     ~DynamixelComm();
-
+    
     unsigned char   CalculateChecksum(unsigned char * b);
     
+    // Misc
     void            Send(unsigned char * b);
     int             Receive(unsigned char * b);
-    
-    bool            ReadMemoryBlock(int id, unsigned char * buffer, int fromAddress, int toAddress);
-    bool            ReadAllData(int id, unsigned char * buffer);
-    
-    int             Move(int id, int pos, int speed);
-    int             SetSpeed(int id, int speed);
-    int             SetPosition(int id, int pos);
-    int             SetTorque(int id, int value);
-    
-    void            SyncMoveWithSpeed(int * pos, int * speed, int n);
-    void            SyncMoveWithIdAndSpeed(int * servo_id, int * pos, int * speed, int n);
-    void            SyncMoveWithIdSpeedAndTorque(int * servo_id, int * pos, int * speed, int * torque, int n);
-    
-    int             GetPosition(int id);
+    void            Reset(int id);
     bool            Ping(int id);
+    void            PrintSyncWrite(unsigned char * outbuf, int from, int to, int n);
+    void            PrintMemory(unsigned char * outbuf, int from, int to);
+    void            PrintRecive(unsigned char * outbuf, int from, int to);
+    void            ResetDynamixel(int id);
+    
+    // Read memory block
+    bool            ReadMemoryRange(int id, unsigned char * buffer, int fromAddress, int toAddress);
+    
+    // Sync write memory block
+    void            SyncWriteWithIdRange(int * servo_id,  unsigned  char ** DynamixelMemoeries, int from, int to, int n);
+    
+    // create a sentStore;
+    unsigned char ** sentStore;
+    
 };
 
 #endif

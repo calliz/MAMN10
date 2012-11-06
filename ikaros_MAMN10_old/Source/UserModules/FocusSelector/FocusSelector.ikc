@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<group name="FocusSelector" description="AGDAS module for focus selection">
+
+	<description type="text">
+		...
+	</description>
+
+	<example description="A simple example">
+		<module
+			class="FocusSelector"
+			name="FocusSelector"
+		/>
+	</example>
+
+	<!-- <input name="STRESS" description="Stresslevel" size="1" /> -->
+
+	<input name="OBJECT_STATUS" description="Objects current position" size="5" />
+
+	<output name="FOCUS" description="Desired server position, x,y,z,flag" size="4" />
+    
+	<module class="FocusSelector" />
+
+	<author>
+		<name>Olle Klang</name>
+		<email></email>
+		<affiliation></affiliation>
+		<homepage></homepage>
+	</author>
+
+   <files>
+   		<file>FocusSelector.h</file>
+   		<file>FocusSelector.cc</file>
+   		<file>FocusSelector.ikc</file>
+   </files>
+
+</group>
+

@@ -62,8 +62,10 @@
     <module
         class = "Randomizer"
         name = "R"
-        outputsize_x = "5"
-        outputsize_y = "5"
+        outputsize_x = "6"
+        outputsize_y = "3"
+        min = "0.1"
+        max = "0.9"
     />
 
     <module
@@ -220,9 +222,9 @@
 
 	<view name="Images">
 		<object class="Image" title="Color Image"  type="rgb" module="Image" source="RED+GREEN+BLUE" x="0" y="0" />
-		<object class="Text" text="The viewobject to the left shows an RGB image. The images below are different pseudo color version of the intensity channel." x="1" y="0" w="2" />
+		<object class="Text" text="The viewobject to the left shows an RGB image. The images below are different pseudo color version of the intensity channel. The final row shows static PNG images. In the middle, a PNG image with a transparent circle is used as an overlay." x="1" y="0" w="2" />
 
-		<object class="Image" title="Fire"  type="fire" module="Image" source="INTENSITY" x="0" y="1" />
+		<object class="Image" title="Fire" type="fire" module="Image" source="INTENSITY" x="0" y="1" />
 		<object class="Image" title="Spectrum"  type="spectrum" module="Image" source="INTENSITY" x="1" y="1" />
 		<object class="Image" title="Green"  type="green" module="Image" source="INTENSITY" x="2" y="1" />
 
@@ -801,17 +803,71 @@
         />
 	</view>
 
-	<view name="Lines">
+	<view name="Paths">
 
 		<object
 			x="0" y="0" 
-			class="Lines" 
-			title="Lines" 
+			class="Path" 
+			title="Multicolored Path" 
 			module="Lines" 
 			source="OUTPUT"
+			stroke_width = "1"
             color = "red, green, blue, yellow"
 		/>
-		
+
+		<object
+			x="1" y="0" 
+			class="Path" 
+			title="Arrows" 
+			module="R" 
+			source="OUTPUT"
+			stroke_width = "9"
+			arrow="yes"
+            color = "red, green, blue, yellow"
+            lineCap = "round"
+            lineJoin = "round"
+            select = "2"
+		/>
+
+		<object
+			x="2" y="0" 
+			class="Path" 
+			title="Paths (Flip X)" 
+			module="R" 
+			source="OUTPUT"
+			stroke_width = "5"
+			arrow="no"
+            color = "red, green, blue, yellow"
+            flip_x_axis = "yes"
+		/>
+
+		<object
+			x="1" y="1" 
+			class="Path" 
+			title="Arrows (Flip Y)" 
+			module="R" 
+			source="OUTPUT"
+			stroke_width = "1"
+			arrow = "yes"
+            color = "red, green, blue, yellow"
+            flip_y_axis = "yes"
+		/>
+
+		<object
+			x="2" y="1" 
+			class="Path" 
+			title="Filled (Flip X and Y)" 
+			module="R" 
+			source="OUTPUT"
+			stroke_width = "1"
+			arrow = "no"
+            close = "yes"
+            fill = "rgba(255,255,255,0.5)"
+            color = "red, green, blue, yellow"
+            flip_x_axis = "yes"
+            flip_y_axis = "yes"
+		/>
+
 	</view>
 
 	<view name="Grab Bag">

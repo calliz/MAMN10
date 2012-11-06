@@ -19,18 +19,15 @@
 		/>
 	</example>
 
+	<parameter name="parameter1" type="float" default="7.0" description="The first parameter" />
+	<parameter name="parameter2" type="int" default="2" description="The second parameter" />
 
-	<input name="INPUT" description="The first input" />
-    <input name="INPUT_POS" description="The second input" size_x = "20" size_param_y= "10"/>
-    <input name="INPUT_DEPTH" description="The depth input" size_x ="640" size_y="480"/>
-    <input name="FACE_POSITION" size="2" description="The first input" />
+	<input name="INPUT1" description="The first input" />
+	<input name="INPUT2" description="The second input" />
 
+	<output name="OUTPUT1" description="The first output" size="10" />
+	<output name="OUTPUT2" description="The second output" size_set="INPUT2" />
 
-	<output name="OUTPUT" description="The first output" size="3" />
-    <output name="FACE_DISTANCE" description="Distance to face in cm" size="1" />
-
-    <!--output name="OUTPUT2" description="The first output" size_x="20" size_param_y="10" /-->
-    
 	<module class="MyModule" />
 
 	<author>
