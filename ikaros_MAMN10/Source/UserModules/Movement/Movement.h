@@ -29,6 +29,7 @@
 
 #include "IKAROS.h"
 
+
 class Movement: public Module
 {
 public:
@@ -45,13 +46,13 @@ public:
 
     float *     stress_array;
     int         stress_array_size;
-    
+
     float *     focus_array;
     int         focus_array_size;
-    
+
     float *     output_array;
     int         output_array_size;
-    
+
     float *     output_speed_array;
     int         output_speed_array_size;
 
@@ -60,7 +61,7 @@ public:
     float **    internal_matrix;
 
     // parameter values
-    
+
     bool        up;
     bool        rotated;
     bool        egg_back;
