@@ -277,7 +277,7 @@ Movement::Tick()
 
             if (t1 - idle_timestamp >= requested_time){
                 output_speed_array[0]= 0.4;
-                output_speed_array[1]= 0.4;
+                output_speed_array[1]= 0.2;
                 output_speed_array[2]= 0.4;
 
                 if(!up){
