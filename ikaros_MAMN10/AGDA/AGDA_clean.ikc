@@ -17,7 +17,6 @@
 		index_mode 	 = "indirect"
 		servo_id	 = "1 2 3"
 		angle_unit 	 = "degrees"
-		speed   	= "0.3"
 		torque		= "0.1"
 		feedback	 = "no"
 		start_up_delay   = "20"

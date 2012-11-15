@@ -34,7 +34,7 @@ typedef struct
 	double activity;
 }object;
 
-struct timeval tim; 
+struct timeval tim;
 
 //Global variables
 buffer_node* buffer;
@@ -50,14 +50,14 @@ ObjectModule::Init()
 
     input_position_array = GetInputArray("FACE_POSITION");
     input_position_array_size = GetInputSize("FACE_POSITION");
-    
+
     input_dist_matrix = GetInputMatrix("FACE_DISTANCE");
 //    input_dist_matrix_size = GetInputSize("FACE_DISTANCE");
 
     output_status_array = GetOutputArray("OBJECT_STATUS");
     output_status_array_size = GetOutputSize("OBJECT_STATUS");
     output_status_array[2] = 300;
-    
+
     error_counter = 0;
 
 }
@@ -70,7 +70,7 @@ ObjectModule::~ObjectModule()
 
     //destroy_array(internal_array);
     //destroy_matrix(internal_matrix);
-	
+
 
     // Do NOT destroy data structures that you got from the
     // kernel with GetInputArray, GetInputMatrix etc.
@@ -95,18 +95,18 @@ void calculateActivity(){
 
 bool valid_velocity(){
     if(abs((float)object_list->x_velo)>max_x_velo){
-        fprintf(stderr,"x_velo=%lf\n", object_list->x_velo);
+       // fprintf(stderr,"x_velo=%lf\n", object_list->x_velo);
         return false;
     }
     if(abs((float)object_list->y_velo)>max_y_velo){
-                fprintf(stderr,"y_velo=%lf\n", object_list->y_velo);
+       //         fprintf(stderr,"y_velo=%lf\n", object_list->y_velo);
         return false;
     }
     if(abs((float)object_list->z_velo)>max_z_velo){
-                fprintf(stderr,"z_velo=%lf\n", object_list->z_velo);
+               // fprintf(stderr,"z_velo=%lf\n", object_list->z_velo);
         return false;
     }
-    fprintf(stderr,"true\n");
+    //fprintf(stderr,"true\n");
     return true;
 }
 
@@ -115,46 +115,46 @@ ObjectModule::Tick()
 {
 	double x, y;
 	int x_cm, y_cm, z_cm;
-	
+
     x= input_position_array[0];
 	y = input_position_array[1];
 	z_cm = input_dist_matrix[(int)(480 * y)][(int)(640 * x)];
-    
+
             //    fprintf(stderr, "x = %lf, y=%lf \n", x, y);
-        
+
         float camera_y_deg = 43/2 * pi /180;
         float camera_x_deg = 57/2 * pi /180;
         int picture_width = (int)(2*z_cm * tan(camera_x_deg));
         int picture_height = (int)(2*z_cm * tan(camera_y_deg));
-        
-    
+
+
     x_cm = (int)(x * picture_width);
     y_cm = (int)(y * picture_height);
-    
+
     if(z_cm != -36){
         gettimeofday(&tim, NULL);
         double t1=tim.tv_sec;
         double t2 =tim.tv_usec;
         t1 = t1 + t2/1000000;
-        
+
         //  if(abs(buffer[current_node - 1].x_cm - x_cm)> ){
         buffer[current_node].x_cm = x_cm;
         buffer[current_node].y_cm = y_cm;
         buffer[current_node].z_cm = z_cm;
         buffer[current_node].micros = t1;
-        
+
         calculateVelocity();
         calculateActivity();
-        
+
         if(valid_velocity()){
             output_status_array[0] = x;
             output_status_array[1] = y;
             output_status_array[2] = z_cm;
             output_status_array[3] = object_list->activity;
             output_status_array[4] = object_list->z_velo;
-            
+
             current_node++;
-            
+
             if(current_node == buffer_size){
                 current_node = 0;
             }

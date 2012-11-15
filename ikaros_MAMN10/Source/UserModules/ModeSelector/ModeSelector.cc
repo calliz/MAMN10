@@ -46,14 +46,14 @@ ModeSelector::Init()
 
     output_array = GetOutputArray("STRESS");
     output_array_size = GetOutputSize("STRESS");
-    
+
     output_array[0] = IDLE_MODE;
     idle_count = 0;
     interest_count = 0;
     give_egg_count = 0;
     limit = 5;
     new_mode = IDLE_MODE;
-    
+
 }
 
 
@@ -72,8 +72,8 @@ ModeSelector::~ModeSelector()
 void
 ModeSelector::Tick()
 {
-    fprintf(stderr, "x=%lf, y=%lf, z_cm=%lf, A=%lf,z_velo=%lf\n", input_array[0],input_array[1],input_array[2],input_array[3],input_array[4]);
-    
+  //  fprintf(stderr, "x=%lf, y=%lf, z_cm=%lf, A=%lf,z_velo=%lf\n", input_array[0],input_array[1],input_array[2],input_array[3],input_array[4]);
+
     if (input_array[2] < 130 && output_array[0] < DEFENSE_MODE && input_array[3]<=10){
         new_mode = GIVE_EGG_MODE;
     }else if (input_array[2] < 350 && input_array[3] > 10){
@@ -81,15 +81,15 @@ ModeSelector::Tick()
     }else{
         new_mode = IDLE_MODE;
     }
-    
+
     if(input_array[4] < - 60){
         new_mode = DEFENSE_MODE;
     }
-    
+
     if (new_mode == IDLE_MODE) {
         idle_count = idle_count + 1;
         if (idle_count >= limit) {
-            fprintf(stderr,"Bytt till IDLE_MODE\n");
+        //    fprintf(stderr,"Bytt till IDLE_MODE\n");
             output_array[0] = IDLE_MODE;
             idle_count = 0;
             interest_count = 0;
@@ -99,7 +99,7 @@ ModeSelector::Tick()
     }else if(new_mode == GIVE_EGG_MODE) {
         give_egg_count = give_egg_count + 1;
         if (give_egg_count >= limit) {
-            fprintf(stderr,"Bytt till GIVE_EGG_MODE\n");
+            //fprintf(stderr,"Bytt till GIVE_EGG_MODE\n");
             output_array[0] = GIVE_EGG_MODE;
             idle_count = 0;
             interest_count = 0;
@@ -109,7 +109,7 @@ ModeSelector::Tick()
     }else if(new_mode == INTEREST_MODE) {
         interest_count = interest_count + 1;
         if (interest_count >= limit) {
-            fprintf(stderr," Bytt till INTEREST_MODE\n");
+        //    fprintf(stderr," Bytt till INTEREST_MODE\n");
             output_array[0] = INTEREST_MODE;
             idle_count = 0;
             interest_count = 0;
@@ -117,7 +117,7 @@ ModeSelector::Tick()
             limit = 20;
         }
     }else if(new_mode == DEFENSE_MODE) {
-        fprintf(stderr,"Bytt till DEFENSE_MODE\n");
+       // fprintf(stderr,"Bytt till DEFENSE_MODE\n");
         output_array[0] = DEFENSE_MODE;
         idle_count = 0;
         interest_count = 0;
