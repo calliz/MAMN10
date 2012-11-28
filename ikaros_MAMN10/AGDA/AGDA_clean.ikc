@@ -68,6 +68,7 @@
 	
 	<connection sourcemodule  = "KINECT" source  = "DEPTH" targetmodule  = "ObjectModule" target  = "FACE_DISTANCE" />
 	<connection sourcemodule = "FaceDetector" source = "FACE_POSITION" targetmodule  = "ObjectModule" target = "FACE_POSITION" />
+	<connection sourcemodule = "FaceDetector" source = "FACES" targetmodule  = "ObjectModule" target = "FACES" />
 
 	<connection sourcemodule = "ObjectModule" source = "OBJECT_STATUS" targetmodule  = "FocusSelector" target = "OBJECT_STATUS" />
 	<connection sourcemodule = "ObjectModule" source = "OBJECT_STATUS" targetmodule  = "Stress" target = "INPUT" />

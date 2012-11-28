@@ -23,6 +23,12 @@
 
 	<input name="FACE_POSITION" size="2" description="The face position relative to the kinect. X, Y, Z" />
     <input name="FACE_DISTANCE" description="The depth input" size_x ="640" size_y="480"/>
+	<input
+    	name="FACES"
+    	size_x="4"
+    	size_y="10"
+    	description="Location of all faces in the image (0-1) and their sizes; each row consists of x, y, size_x and size_y for one face"
+	/>
 
 	<!--<output name="OBJECT_POSITION" description="The x,y,z position of the object in cm" size="3" />-->
 	<output name="OBJECT_STATUS" description="The position in x,y,z, the velocity in x,y,z in cm/µs and the activity level of the object" size="5" />

@@ -45,7 +45,7 @@ public:
 
     float *     input_position_array;
     int         input_position_array_size;
-    
+
     float **    input_dist_matrix;
     int         input_dist_matrix_size_x;
     int         input_dist_matrix_size_y;
@@ -53,6 +53,9 @@ public:
     float *     output_status_array;
     int         output_status_array_size;
 
+    float**     input_faces_matrix;
+    int         input_faces_matrix_size_x;
+    int         input_faces_matrix_size_y;
 
     // internal data storage
     int         error_counter;

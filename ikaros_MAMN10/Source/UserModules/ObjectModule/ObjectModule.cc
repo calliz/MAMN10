@@ -3,7 +3,7 @@
 #include <sys/time.h>
 
 #define buffer_size 20
-#define number_of_objects 1
+#define number_of_objects 10
 #define velocity_distance 2 //antal steg bakåt i bufferten
 #define x_activity_scale_factor 1
 #define y_activity_scale_factor 1
@@ -50,7 +50,9 @@ ObjectModule::Init()
 
     input_position_array = GetInputArray("FACE_POSITION");
     input_position_array_size = GetInputSize("FACE_POSITION");
-
+    input_faces_matrix = GetInputMatrix("FACES");
+    input_faces_matrix_size_x = GetInputSizeX("FACES");
+    input_faces_matrix_size_y = GetInputSizeY("FACES");
     input_dist_matrix = GetInputMatrix("FACE_DISTANCE");
 //    input_dist_matrix_size = GetInputSize("FACE_DISTANCE");
 
@@ -113,6 +115,13 @@ bool valid_velocity(){
 void
 ObjectModule::Tick()
 {
+    for(int j = 0; j <input_faces_matrix_size_y; j++){
+        for(int i = 0; i<input_faces_matrix_size_x; i++){
+            fprintf(stderr, "%lf ", input_faces_matrix[j][i]);
+        }
+        fprintf(stderr, "\n");
+    }
+
 	double x, y;
 	int x_cm, y_cm, z_cm;
 
