@@ -71,31 +71,32 @@ FocusSelector::~FocusSelector()
 void
 FocusSelector::Tick()
 {
+int index_of_max_activity = 0;
+double max_activity = 0;
+for(int y= 0;y<10;y++){
+    if(input_objects_matrix[y][3]>max_activity){
+        index_of_max_activity = y;
+        max_activity = input_objects_matrix[y][3];
+    }
+}
+
     if(input_objects_array[4] > 0){
-        output_focus_array[0] = input_objects_array[0];
-        output_focus_array[1] = input_objects_array[1];
-        output_focus_array[2] = input_objects_array[2];
+        output_focus_array[0] = input_objects_matrix[index_of_max_activity][0];
+        output_focus_array[1] = input_objects_matrix[index_of_max_activity][1];
+        output_focus_array[2] = input_objects_matrix[index_of_max_activity][2];
         output_focus_array[3] = 0;
 
     }
 
-    for(int y = 0; y<10;y++){
-            fprintf(stderr, "%lf, %lf, %lf, %lf \n", input_objects_matrix[y][0], input_objects_matrix[y][1], input_objects_matrix[y][2], input_objects_matrix[y][3]);
-    }
-
-//    else{
-//        idle_count = idle_count + 1;
-//        if (idle_count >= 10) {
-//            output_focus_array[3] = -1;
-//            idle_count = 0;
-//        }
+//    for(int y = 0; y<10;y++){
+//            fprintf(stderr, "%lf, %lf, %lf, %lf, %lf \n", input_objects_matrix[y][0], input_objects_matrix[y][1], input_objects_matrix[y][2], input_objects_matrix[y][3], input_objects_matrix[y][4]);
 //    }
 
+    output_focus_array[0] = input_objects_matrix[index_of_max_activity][0];
+    output_focus_array[1] = input_objects_matrix[index_of_max_activity][1];
+    output_focus_array[2] = input_objects_matrix[index_of_max_activity][2];
 
-    output_focus_array[0] = input_objects_array[0];
-    output_focus_array[1] = input_objects_array[1];
-    output_focus_array[2] = input_objects_array[2];
-
+    fprintf(stderr, "%lf, %lf, %lf, %lf\n", output_focus_array[0], output_focus_array[1], output_focus_array[2], output_focus_array[3]);
 
 
 }

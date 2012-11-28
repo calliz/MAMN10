@@ -28,6 +28,8 @@ typedef struct
 
 typedef struct
 {
+    double x;
+    double y;
 	double x_velo;
 	double y_velo;
 	double z_velo;
@@ -168,6 +170,8 @@ ObjectModule::Tick()
   //fprintf(stderr,"Checkpoint 4 \n");
         calculateActivity(object_index);
   //fprintf(stderr,"Checkpoint 5 \n");
+        object_list[object_index].x=x;
+        object_list[object_index].y=y;
         if(valid_velocity(object_index)){
 //            output_status_array[0] = x;
 //            output_status_array[1] = y;
@@ -186,10 +190,11 @@ ObjectModule::Tick()
    //fprintf(stderr,"Checkpoint 6 \n");
     for(int y= 0; y<10;y++){
             //Skickar med hastigheten vilket är fel!!
-            output_object_matrix[y][0] = object_list[y].x_velo;
-            output_object_matrix[y][1] = object_list[y].y_velo;
-            output_object_matrix[y][2] = object_list[y].z_velo;
+            output_object_matrix[y][0] = object_list[y].x;
+            output_object_matrix[y][1] = object_list[y].y;
+            output_object_matrix[y][2] = buffer[y][current_node[y]].z_cm;
             output_object_matrix[y][3] = object_list[y].activity;
+            output_object_matrix[y][4] = object_list[y].z_velo;
     }
      // fprintf(stderr,"Checkpoint 7 \n");
 }

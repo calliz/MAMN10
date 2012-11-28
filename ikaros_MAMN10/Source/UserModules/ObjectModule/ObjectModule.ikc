@@ -21,7 +21,7 @@
 
 	<output
     		name="OBJECTS"
-    		size_x="4"
+    		size_x="5"
     		size_y="10"
     		description="Position of each face and the activity and z velocity. x, y, activity, z_velo"
 	/>

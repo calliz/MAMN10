@@ -19,7 +19,7 @@
 
 	<input
     	name="OBJECTS"
-    	size_x="4"
+    	size_x="5"
     	size_y="10"
     	description="Input from ObjectModule. x,y, activity, z_velo for all objects."
 	/>
