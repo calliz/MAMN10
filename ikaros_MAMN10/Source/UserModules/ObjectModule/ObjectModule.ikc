@@ -10,24 +10,20 @@
 		UserModules directory.
 	</description>
 
-	<example description="A simple example">
-		<module
-			class="ObjectModule"
-			name="ObjectModule"
-			parameter1 = "3.14"
-			parameter2 = "42"
-		/>
-	</example>
-
-
-
 	<input name="FACE_POSITION" size="2" description="The face position relative to the kinect. X, Y, Z" />
-    <input name="FACE_DISTANCE" description="The depth input" size_x ="640" size_y="480"/>
+    	<input name="FACE_DISTANCE" description="The depth input" size_x ="640" size_y="480"/>
 	<input
-    	name="FACES"
-    	size_x="4"
-    	size_y="10"
-    	description="Location of all faces in the image (0-1) and their sizes; each row consists of x, y, size_x and size_y for one face"
+    		name="FACES"
+    		size_x="4"
+    		size_y="10"
+    		description="Location of all faces in the image (0-1) and their sizes; each row consists of x, y, size_x and size_y for one face"
+	/>
+
+	<output
+    		name="OBJECTS"
+    		size_x="4"
+    		size_y="10"
+    		description="Position of each face and the activity and z velocity. x, y, activity, z_velo"
 	/>
 
 	<!--<output name="OBJECT_POSITION" description="The x,y,z position of the object in cm" size="3" />-->

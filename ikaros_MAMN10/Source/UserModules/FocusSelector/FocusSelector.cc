@@ -40,17 +40,18 @@ FocusSelector::Init()
 {
     input_objects_array = GetInputArray("OBJECT_STATUS");
     input_objects_array_size = GetInputSize("OBJECT_STATUS");
-    
+
 //    input_stress_array = GetInputArray("STRESS");
 //    input_stress_array_size = GetInputSize("STRESS");
-    
+
     output_focus_array = GetOutputArray("FOCUS");
     output_focus_array_size = GetOutputSize("FOCUS");
-    
+
+    input_objects_matrix = GetInputMatrix("OBJECTS");
     output_focus_array[0] = -1;
     output_focus_array[1] = -1;
     output_focus_array[2] = -1;
-    
+
     idle_count = 0;
 }
 
@@ -77,7 +78,11 @@ FocusSelector::Tick()
         output_focus_array[3] = 0;
 
     }
-    
+
+    for(int y = 0; y<10;y++){
+            fprintf(stderr, "%lf, %lf, %lf, %lf \n", input_objects_matrix[y][0], input_objects_matrix[y][1], input_objects_matrix[y][2], input_objects_matrix[y][3]);
+    }
+
 //    else{
 //        idle_count = idle_count + 1;
 //        if (idle_count >= 10) {
@@ -85,13 +90,14 @@ FocusSelector::Tick()
 //            idle_count = 0;
 //        }
 //    }
-    
+
+
     output_focus_array[0] = input_objects_array[0];
     output_focus_array[1] = input_objects_array[1];
     output_focus_array[2] = input_objects_array[2];
-    
-    
-    
+
+
+
 }
 
 // Install the module. This code is executed during start-up.

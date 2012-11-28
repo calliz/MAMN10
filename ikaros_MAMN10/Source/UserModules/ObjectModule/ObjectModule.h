@@ -53,12 +53,12 @@ public:
     float *     output_status_array;
     int         output_status_array_size;
 
+    float**     output_object_matrix;
+
     float**     input_faces_matrix;
     int         input_faces_matrix_size_x;
     int         input_faces_matrix_size_y;
 
-    // internal data storage
-    int         error_counter;
 
     // parameter values
 

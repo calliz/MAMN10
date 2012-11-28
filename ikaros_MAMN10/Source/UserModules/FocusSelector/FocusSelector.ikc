@@ -17,6 +17,12 @@
 
 	<input name="OBJECT_STATUS" description="Objects current position" size="5" />
 
+	<input
+    	name="OBJECTS"
+    	size_x="4"
+    	size_y="10"
+    	description="Input from ObjectModule. x,y, activity, z_velo for all objects."
+	/>
 	<output name="FOCUS" description="Desired server position, x,y,z,flag" size="4" />
     
 	<module class="FocusSelector" />

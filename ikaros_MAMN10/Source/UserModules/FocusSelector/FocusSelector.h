@@ -45,12 +45,14 @@ public:
 
     float *     input_objects_array;
     int         input_objects_array_size;
-    
+
     float *     input_stress_array;
     int         input_stress_array_size;
 
     float *     output_focus_array;
     int         output_focus_array_size;
+
+    float **    input_objects_matrix;
 
     // internal data storage
 
@@ -58,7 +60,7 @@ public:
     float **    internal_matrix;
 
     // parameter values
-    
+
     int         idle_count;
 
 };

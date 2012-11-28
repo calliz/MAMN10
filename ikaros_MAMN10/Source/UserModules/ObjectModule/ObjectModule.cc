@@ -37,16 +37,23 @@ typedef struct
 struct timeval tim;
 
 //Global variables
-buffer_node* buffer;
+buffer_node** buffer;
 object* object_list;
-int current_node;
-
+int* current_node;
+int* error_counter;
 void
 ObjectModule::Init()
 {
-    buffer = (buffer_node*) calloc(sizeof(buffer_node), buffer_size);
+    buffer = new buffer_node*[number_of_objects];
+
+    for(int i = 0; i< number_of_objects;i++){
+        buffer[i] = new buffer_node[buffer_size];
+    }
+
+ //   (buffer_node**) calloc(sizeof(buffer_node), buffer_size*number_of_objects);
 	object_list = (object*) calloc(sizeof(object), number_of_objects);
-	current_node = 0;
+	current_node = (int*) calloc(sizeof(int), number_of_objects);
+    error_counter = (int*) calloc(sizeof(int), number_of_objects);
 
     input_position_array = GetInputArray("FACE_POSITION");
     input_position_array_size = GetInputSize("FACE_POSITION");
@@ -54,13 +61,12 @@ ObjectModule::Init()
     input_faces_matrix_size_x = GetInputSizeX("FACES");
     input_faces_matrix_size_y = GetInputSizeY("FACES");
     input_dist_matrix = GetInputMatrix("FACE_DISTANCE");
-//    input_dist_matrix_size = GetInputSize("FACE_DISTANCE");
+
+    output_object_matrix = GetOutputMatrix("OBJECTS");
 
     output_status_array = GetOutputArray("OBJECT_STATUS");
     output_status_array_size = GetOutputSize("OBJECT_STATUS");
     output_status_array[2] = 300;
-
-    error_counter = 0;
 
 }
 
@@ -78,33 +84,33 @@ ObjectModule::~ObjectModule()
     // kernel with GetInputArray, GetInputMatrix etc.
 }
 
-void calculateVelocity(){
-	int buddy_node = (current_node - velocity_distance) % buffer_size;
+void calculateVelocity(int object_index){
+	int buddy_node = (current_node[object_index] - velocity_distance) % buffer_size;
 	if(buddy_node<0){
 		buddy_node = buddy_node+buffer_size;
 	}
 	float buddy_micros;
-	if((buddy_micros = buffer[buddy_node].micros)!= 0){
-		object_list->x_velo= ((buffer[current_node].x_cm - buffer[buddy_node].x_cm)) / (buffer[current_node].micros - buffer[buddy_node].micros);
-		object_list->y_velo= ((buffer[current_node].y_cm - buffer[buddy_node].y_cm)) / (buffer[current_node].micros - buffer[buddy_node].micros);
-		object_list->z_velo= ((buffer[current_node].z_cm - buffer[buddy_node].z_cm)) / ((buffer[current_node].micros - buffer[buddy_node].micros));
+	if((buddy_micros = buffer[object_index][buddy_node].micros)!= 0){
+		object_list[object_index].x_velo= ((buffer[object_index][current_node[object_index]].x_cm - buffer[object_index][buddy_node].x_cm)) / (buffer[object_index][current_node[object_index]].micros - buffer[object_index][buddy_node].micros);
+		object_list[object_index].y_velo= ((buffer[object_index][current_node[object_index]].y_cm - buffer[object_index][buddy_node].y_cm)) / (buffer[object_index][current_node[object_index]].micros - buffer[object_index][buddy_node].micros);
+		object_list[object_index].z_velo= ((buffer[object_index][current_node[object_index]].z_cm - buffer[object_index][buddy_node].z_cm)) / ((buffer[object_index][current_node[object_index]].micros - buffer[object_index][buddy_node].micros));
 	}
 }
 
-void calculateActivity(){
-	object_list->activity= x_activity_scale_factor*abs((float)object_list->x_velo) + y_activity_scale_factor*abs((float)object_list->y_velo) + z_activity_scale_factor*abs((float)object_list->z_velo);
+void calculateActivity(int object_index){
+	object_list[object_index].activity= x_activity_scale_factor*abs((float)object_list[object_index].x_velo) + y_activity_scale_factor*abs((float)object_list[object_index].y_velo) + z_activity_scale_factor*abs((float)object_list[object_index].z_velo);
 }
 
-bool valid_velocity(){
-    if(abs((float)object_list->x_velo)>max_x_velo){
+bool valid_velocity(int object_index){
+    if(abs((float)object_list[object_index].x_velo)>max_x_velo){
        // fprintf(stderr,"x_velo=%lf\n", object_list->x_velo);
         return false;
     }
-    if(abs((float)object_list->y_velo)>max_y_velo){
+    if(abs((float)object_list[object_index].y_velo)>max_y_velo){
        //         fprintf(stderr,"y_velo=%lf\n", object_list->y_velo);
         return false;
     }
-    if(abs((float)object_list->z_velo)>max_z_velo){
+    if(abs((float)object_list[object_index].z_velo)>max_z_velo){
                // fprintf(stderr,"z_velo=%lf\n", object_list->z_velo);
         return false;
     }
@@ -115,18 +121,21 @@ bool valid_velocity(){
 void
 ObjectModule::Tick()
 {
-    for(int j = 0; j <input_faces_matrix_size_y; j++){
-        for(int i = 0; i<input_faces_matrix_size_x; i++){
-            fprintf(stderr, "%lf ", input_faces_matrix[j][i]);
-        }
-        fprintf(stderr, "\n");
-    }
+//    for(int i = 0; i<10; i++){
+//        fprintf(stderr,"%d current_node:%d\n",i, current_node[i]);
+//    }
 
+    for(int object_index = 0; object_index <10; object_index++){
+    //fprintf(stderr, "object_index=%d\n", object_index);
+    //fprintf(stderr, "Checkpoint 1 \n");
 	double x, y;
 	int x_cm, y_cm, z_cm;
 
-    x= input_position_array[0];
-	y = input_position_array[1];
+    x= input_faces_matrix[object_index][0];
+	y = input_faces_matrix[object_index][1];
+	if(y<0 || y>1 || x<0 || x>1){
+        z_cm=-36;
+	}else{
 	z_cm = input_dist_matrix[(int)(480 * y)][(int)(640 * x)];
 
             //    fprintf(stderr, "x = %lf, y=%lf \n", x, y);
@@ -139,6 +148,8 @@ ObjectModule::Tick()
 
     x_cm = (int)(x * picture_width);
     y_cm = (int)(y * picture_height);
+	}
+    //fprintf(stderr,"Checkpoint 2 \n");
 
     if(z_cm != -36){
         gettimeofday(&tim, NULL);
@@ -147,28 +158,40 @@ ObjectModule::Tick()
         t1 = t1 + t2/1000000;
 
         //  if(abs(buffer[current_node - 1].x_cm - x_cm)> ){
-        buffer[current_node].x_cm = x_cm;
-        buffer[current_node].y_cm = y_cm;
-        buffer[current_node].z_cm = z_cm;
-        buffer[current_node].micros = t1;
+      //  fprintf(stderr,"object_index=%d, current_node=%d, buffer=%lf \n", object_index, current_node[object_index], buffer[0][0].x_cm);
+        buffer[object_index][current_node[object_index]].x_cm = x_cm;
+        buffer[object_index][current_node[object_index]].y_cm = y_cm;
+        buffer[object_index][current_node[object_index]].z_cm = z_cm;
+        buffer[object_index][current_node[object_index]].micros = t1;
+  //fprintf(stderr,"Checkpoint 3 \n");
+        calculateVelocity(object_index);
+  //fprintf(stderr,"Checkpoint 4 \n");
+        calculateActivity(object_index);
+  //fprintf(stderr,"Checkpoint 5 \n");
+        if(valid_velocity(object_index)){
+//            output_status_array[0] = x;
+//            output_status_array[1] = y;
+//            output_status_array[2] = z_cm;
+//            output_status_array[3] = object_list->activity;
+//            output_status_array[4] = object_list->z_velo;
 
-        calculateVelocity();
-        calculateActivity();
+            current_node[object_index]++;
 
-        if(valid_velocity()){
-            output_status_array[0] = x;
-            output_status_array[1] = y;
-            output_status_array[2] = z_cm;
-            output_status_array[3] = object_list->activity;
-            output_status_array[4] = object_list->z_velo;
-
-            current_node++;
-
-            if(current_node == buffer_size){
-                current_node = 0;
+            if(current_node[object_index] == buffer_size){
+                current_node[object_index] = 0;
             }
         }
     }
+    }
+   //fprintf(stderr,"Checkpoint 6 \n");
+    for(int y= 0; y<10;y++){
+            //Skickar med hastigheten vilket är fel!!
+            output_object_matrix[y][0] = object_list[y].x_velo;
+            output_object_matrix[y][1] = object_list[y].y_velo;
+            output_object_matrix[y][2] = object_list[y].z_velo;
+            output_object_matrix[y][3] = object_list[y].activity;
+    }
+     // fprintf(stderr,"Checkpoint 7 \n");
 }
 
 // Install the module. This code is executed during start-up.
