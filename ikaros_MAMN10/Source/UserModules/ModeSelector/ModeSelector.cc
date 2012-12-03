@@ -77,14 +77,15 @@ ModeSelector::~ModeSelector()
 void
 ModeSelector::CalculateFaceAverage()
 {
-    int nbr_faces= 0;;
+    int nbr_faces= 0;
+    int nbr_not_faces=0;
     for(int i = 0; i<5;i++){
         internal_array[i] = 0;
     }
     for(int y = 0; y<10;y++){
-        if(input_objects_matrix[y][3]!= 0){
-            internal_array[x_pos] = internal_array[x_pos] + input_objects_matrix[y][x_pos];
-            internal_array[y_pos] = internal_array[y_pos] + input_objects_matrix[y][y_pos];
+        if(input_objects_matrix[y][z_cm]!= -36){
+            //internal_array[x_pos] = internal_array[x_pos] + input_objects_matrix[y][x_pos];
+            //internal_array[y_pos] = internal_array[y_pos] + input_objects_matrix[y][y_pos];
             internal_array[z_cm] = internal_array[z_cm] + input_objects_matrix[y][z_cm];
 
             internal_array[activity] = internal_array[activity] + input_objects_matrix[y][activity];
@@ -95,14 +96,17 @@ ModeSelector::CalculateFaceAverage()
                 internal_array[z_velo] = internal_array[z_velo] + input_objects_matrix[y][z_velo];
             }
             nbr_faces++;
-            //fprintf(stderr, "Face: z_cm=%lf, activity=%lf, z_velo=%lf", input_objects_matrix[y][z_cm], input_objects_matrix[y][activity], input_objects_matrix[y][z_velo]);
 
+        }else{
+        nbr_not_faces++;
         }
+        fprintf(stderr, "x=%lf, y=%lf, z_cm=%lf, activity=%lf, z_velo=%lf\n", input_objects_matrix[y][x_pos], input_objects_matrix[y][y_pos],input_objects_matrix[y][z_cm], input_objects_matrix[y][activity], input_objects_matrix[y][z_velo]);
+
     }
     for(int y = 0; y<5;y++){
         internal_array[y]= internal_array[y]/nbr_faces;
     }
-//    fprintf(stderr,"Nbr_faces=%d\n", nbr_faces);
+    fprintf(stderr,"Nbr_faces=%d, nbr_not_faces=%d\n", nbr_faces, nbr_not_faces);
 //    fprintf(stderr, "FaceAverage: z_cm=%lf, activity = %lf, z_velo=%lf, nbr_faces = %d\n", internal_array[z_cm], internal_array[activity], internal_array[z_velo], nbr_faces);
 }
 

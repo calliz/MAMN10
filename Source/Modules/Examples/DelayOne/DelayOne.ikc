@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<group name="DelayOne" description="Delay">
+
+	<description type="text">	
+		This module demonstrates how the output size can depend on the input size using the SetSizes function	
+	</description>
+
+	<example description="A simple example">
+		<module
+			class="DelayOne"
+			name="DelayOne"
+		/>
+	</example>
+
+	<input name="INPUT1" description="The input" />
+
+	<output name="OUTPUT" description="The output" />
+
+	<module class="DelayOne" />
+
+	<author>
+		<name>Christian Balkenius</name>
+		<email>christian.balkenius@lucs.lu.se</email>
+		<affiliation>Lund University Cognitive Science</affiliation>
+		<homepage>http://www.lucs.lu.se/Christian.Balkenius</homepage>
+	</author>
+
+   <files>
+   		<file>DelayOne.h</file>
+   		<file>DelayOne.cc</file>
+   		<file>DelayOne.ikc</file>
+   </files>
+
+</group>

@@ -155,16 +155,39 @@ ObjectModule::Tick()
         buffer[object_index][current_node[object_index]].y_cm = y_cm;
         buffer[object_index][current_node[object_index]].z_cm = z_cm;
         buffer[object_index][current_node[object_index]].micros = t1;
+
         calculateVelocity(object_index);
         calculateActivity(object_index);
+
         object_list[object_index].x=x;
         object_list[object_index].y=y;
+        error_counter[object_index]=0;
+    }else{
 
-        if(object_list[object_index].activity == 0){
-            error_counter[object_index]++;
-        }
+//        if(error_counter[object_index]>3){
+//            buffer[object_index][current_node[object_index]].x_cm = 0;
+//            buffer[object_index][current_node[object_index]].y_cm = 0;
+//            buffer[object_index][current_node[object_index]].z_cm = 0;
+//            buffer[object_index][current_node[object_index]].micros = 0;
+//            calculateVelocity(object_index);
+//            calculateActivity(object_index);
+//
+//            object_list[object_index].x=-1;
+//            object_list[object_index].y=-1;
+//            error_counter[object_index]=0;
+//        }else{
+//            current_node[object_index]--;
+//            if(current_node[object_index]<0){
+//                current_node[object_index]=current_node[object_index]+buffer_size;
+//            }
+//        }
+//        error_counter[object_index]++;
+    }
+//        if(object_list[object_index].activity == 0){
+//            error_counter[object_index]++;
+//        }
 
-        if(valid_velocity(object_index) || error_counter[object_index]>5){
+        if(valid_velocity(object_index)){
             output_object_matrix[object_index][0] = object_list[object_index].x;
             output_object_matrix[object_index][1] = object_list[object_index].y;
             output_object_matrix[object_index][2] = z_cm;
@@ -176,19 +199,19 @@ ObjectModule::Tick()
             if(current_node[object_index] == buffer_size){
                 current_node[object_index] = 0;
             }
-            error_counter[object_index]=0;
-        }else{
-            error_counter[object_index]++;
-        }
+         }
     }
-        if(buffer[object_index][current_node[object_index]].micros>1000000){
-                buffer[object_index][current_node[object_index]].micros = 0;
-                buffer[object_index][current_node[object_index]].x_cm = 0;
-                buffer[object_index][current_node[object_index]].y_cm = 0;
-                buffer[object_index][current_node[object_index]].z_cm = 0;
+//        if(t1-buffer[object_index][current_node[object_index]].micros>2000000){
+//                buffer[object_index][current_node[object_index]].micros = 0;
+//                buffer[object_index][current_node[object_index]].x_cm = 0;
+//                buffer[object_index][current_node[object_index]].y_cm = 0;
+//                buffer[object_index][current_node[object_index]].z_cm = 0;
+//
+//        }
 
-        }
-    }
+//    for(int y = 0; y<10;y++){
+//
+//    }
 
 }
 
