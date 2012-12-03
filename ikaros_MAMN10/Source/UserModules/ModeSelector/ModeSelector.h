@@ -39,6 +39,7 @@ public:
 
     void 		Init();
     void 		Tick();
+    void        CalculateFaceAverage();
 
     // pointers to inputs and outputs
     // and integers to represent their sizes
@@ -48,14 +49,15 @@ public:
 
     float *     output_array;
     int         output_array_size;
-  
+
     // internal data storage
 
     float *     internal_array;
     float **    internal_matrix;
+    float **    input_objects_matrix;
 
     // parameter values
-    
+
     int         idle_count;
     int         interest_count;
     int         give_egg_count;

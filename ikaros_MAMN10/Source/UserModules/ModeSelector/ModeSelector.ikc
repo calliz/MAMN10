@@ -15,7 +15,12 @@
 
 
 	<input name="INPUT" description="Objects current position" size="5" />
-
+	<input
+    	name="OBJECTS"
+    	size_x="5"
+    	size_y="10"
+    	description="Input from ObjectModule. x,y, activity, z_velo for all objects."
+	/>
 	<output name="STRESS" description="Current stress level" size="1" />
     
 	<module class="ModeSelector" />

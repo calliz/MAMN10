@@ -73,6 +73,7 @@
 	<connection sourcemodule = "ObjectModule" source = "OBJECT_STATUS" targetmodule  = "FocusSelector" target = "OBJECT_STATUS" />
 	<connection sourcemodule = "ObjectModule" source = "OBJECT_STATUS" targetmodule  = "Stress" target = "INPUT" />
 	<connection sourcemodule = "ObjectModule" source = "OBJECTS" targetmodule = "FocusSelector" target = "OBJECTS"/>
+	<connection sourcemodule = "ObjectModule" source = "OBJECTS" targetmodule = "Stress" target = "OBJECTS"/>
 
 	<connection sourcemodule = "FocusSelector" source = "FOCUS" targetmodule  = "Movement" target = "FOCUS" />
 	<connection sourcemodule = "Stress" source = "STRESS" targetmodule  = "Movement" target  = "STRESS" />

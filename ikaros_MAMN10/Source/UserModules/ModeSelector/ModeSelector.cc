@@ -31,6 +31,11 @@
 #define GIVE_EGG_MODE 3
 #define DEFENSE_MODE 4
 
+#define x_pos 0
+#define y_pos 1
+#define z_cm 2
+#define activity 3
+#define z_velo 4
 // use the ikaros namespace to access the math library
 // this is preferred to using math.h
 
@@ -46,13 +51,14 @@ ModeSelector::Init()
 
     output_array = GetOutputArray("STRESS");
     output_array_size = GetOutputSize("STRESS");
-
+    input_objects_matrix = GetInputMatrix("OBJECTS");
     output_array[0] = IDLE_MODE;
     idle_count = 0;
     interest_count = 0;
     give_egg_count = 0;
     limit = 5;
     new_mode = IDLE_MODE;
+    internal_array = new float[5];
 
 }
 
@@ -68,21 +74,51 @@ ModeSelector::~ModeSelector()
     // kernel with GetInputArray, GetInputMatrix etc.
 }
 
+void
+ModeSelector::CalculateFaceAverage()
+{
+    int nbr_faces= 0;;
+    for(int i = 0; i<5;i++){
+        internal_array[i] = 0;
+    }
+    for(int y = 0; y<10;y++){
+        if(input_objects_matrix[y][3]!= 0){
+            internal_array[x_pos] = internal_array[x_pos] + input_objects_matrix[y][x_pos];
+            internal_array[y_pos] = internal_array[y_pos] + input_objects_matrix[y][y_pos];
+            internal_array[z_cm] = internal_array[z_cm] + input_objects_matrix[y][z_cm];
+
+            internal_array[activity] = internal_array[activity] + input_objects_matrix[y][activity];
+
+            if(input_objects_matrix[y][z_velo]<-60){
+                internal_array[z_velo] = internal_array[z_velo] + input_objects_matrix[y][z_velo] * 10;
+            }else{
+                internal_array[z_velo] = internal_array[z_velo] + input_objects_matrix[y][z_velo];
+            }
+            nbr_faces++;
+        }
+    }
+    for(int y = 0; y<5;y++){
+        internal_array[y]= internal_array[y]/nbr_faces;
+    }
+    fprintf(stderr, "FaceAverage: z_cm=%lf, activity = %lf, z_velo=%lf, nbr_faces = %d\n", internal_array[z_cm], internal_array[activity], internal_array[z_velo], nbr_faces);
+}
+
 
 void
 ModeSelector::Tick()
 {
   //  fprintf(stderr, "x=%lf, y=%lf, z_cm=%lf, A=%lf,z_velo=%lf\n", input_array[0],input_array[1],input_array[2],input_array[3],input_array[4]);
+    CalculateFaceAverage();
 
-    if (input_array[2] < 130 && output_array[0] < DEFENSE_MODE && input_array[3]<=10){
+    if (internal_array[2] < 130 && output_array[0] < DEFENSE_MODE && internal_array[3]<=10){
         new_mode = GIVE_EGG_MODE;
-    }else if (input_array[2] < 350 && input_array[3] > 10){
+    }else if (internal_array[2] < 350 && internal_array[3] > 10){
         new_mode = INTEREST_MODE;
     }else{
         new_mode = IDLE_MODE;
     }
 
-    if(input_array[4] < - 60){
+    if(internal_array[4] < - 60){
         new_mode = DEFENSE_MODE;
     }
 
