@@ -96,7 +96,6 @@ void calculateVelocity(int object_index){
 		object_list[object_index].x_velo= ((buffer[object_index][current_node[object_index]].x_cm - buffer[object_index][buddy_node].x_cm)) / (buffer[object_index][current_node[object_index]].micros - buffer[object_index][buddy_node].micros);
 		object_list[object_index].y_velo= ((buffer[object_index][current_node[object_index]].y_cm - buffer[object_index][buddy_node].y_cm)) / (buffer[object_index][current_node[object_index]].micros - buffer[object_index][buddy_node].micros);
 		object_list[object_index].z_velo= ((buffer[object_index][current_node[object_index]].z_cm - buffer[object_index][buddy_node].z_cm)) / ((buffer[object_index][current_node[object_index]].micros - buffer[object_index][buddy_node].micros));
-
 	}
 }
 
@@ -121,7 +120,13 @@ bool valid_velocity(int object_index){
 void
 ObjectModule::Tick()
 {
-
+    gettimeofday(&tim, NULL);
+    double t1=tim.tv_sec;
+    double t2 =tim.tv_usec;
+    t1 = t1 + t2/1000000;
+//    for(int i = 0; i<10;i++){
+//        fprintf(stderr, "%lf, %lf, %lf, %lf\n",input_faces_matrix[i][0],input_faces_matrix[i][1],input_faces_matrix[i][2],input_faces_matrix[i][3]);
+//    }
     for(int object_index = 0; object_index <10; object_index++){
 	double x, y;
 	int x_cm, y_cm, z_cm;
@@ -130,6 +135,7 @@ ObjectModule::Tick()
 	y = input_faces_matrix[object_index][1];
 	if(y<0 || y>1 || x<0 || x>1){
         z_cm=-36;
+
 	}else{
 	z_cm = input_dist_matrix[(int)(480 * y)][(int)(640 * x)];
 
@@ -145,11 +151,6 @@ ObjectModule::Tick()
 	}
 
     if(z_cm != -36){
-        gettimeofday(&tim, NULL);
-        double t1=tim.tv_sec;
-        double t2 =tim.tv_usec;
-        t1 = t1 + t2/1000000;
-
         buffer[object_index][current_node[object_index]].x_cm = x_cm;
         buffer[object_index][current_node[object_index]].y_cm = y_cm;
         buffer[object_index][current_node[object_index]].z_cm = z_cm;
@@ -158,6 +159,10 @@ ObjectModule::Tick()
         calculateActivity(object_index);
         object_list[object_index].x=x;
         object_list[object_index].y=y;
+
+        if(object_list[object_index].activity == 0){
+            error_counter[object_index]++;
+        }
 
         if(valid_velocity(object_index) || error_counter[object_index]>5){
             output_object_matrix[object_index][0] = object_list[object_index].x;
@@ -176,7 +181,15 @@ ObjectModule::Tick()
             error_counter[object_index]++;
         }
     }
+        if(buffer[object_index][current_node[object_index]].micros>1000000){
+                buffer[object_index][current_node[object_index]].micros = 0;
+                buffer[object_index][current_node[object_index]].x_cm = 0;
+                buffer[object_index][current_node[object_index]].y_cm = 0;
+                buffer[object_index][current_node[object_index]].z_cm = 0;
+
+        }
     }
+
 }
 
 // Install the module. This code is executed during start-up.

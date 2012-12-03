@@ -95,12 +95,15 @@ ModeSelector::CalculateFaceAverage()
                 internal_array[z_velo] = internal_array[z_velo] + input_objects_matrix[y][z_velo];
             }
             nbr_faces++;
+            //fprintf(stderr, "Face: z_cm=%lf, activity=%lf, z_velo=%lf", input_objects_matrix[y][z_cm], input_objects_matrix[y][activity], input_objects_matrix[y][z_velo]);
+
         }
     }
     for(int y = 0; y<5;y++){
         internal_array[y]= internal_array[y]/nbr_faces;
     }
-    fprintf(stderr, "FaceAverage: z_cm=%lf, activity = %lf, z_velo=%lf, nbr_faces = %d\n", internal_array[z_cm], internal_array[activity], internal_array[z_velo], nbr_faces);
+//    fprintf(stderr,"Nbr_faces=%d\n", nbr_faces);
+//    fprintf(stderr, "FaceAverage: z_cm=%lf, activity = %lf, z_velo=%lf, nbr_faces = %d\n", internal_array[z_cm], internal_array[activity], internal_array[z_velo], nbr_faces);
 }
 
 
